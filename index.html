@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Menú - Asistente IA</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2196F3">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="apple-touch-icon" href="icon-192x192.png">
+</head>
+<body>
+    <!-- Asistente de IA -->
+    <div id="ai-assistant" class="ai-assistant">
+        <div class="ai-header">
+            <h3>🤖 Asistente IA</h3>
+            <div class="ai-controls">
+                <button id="voice-toggle" class="voice-btn" title="Activar/Desactivar respuestas por voz">
+                    🔊
+                </button>
+                <button id="settings-btn" class="settings-btn" title="Configuración">
+                    ⚙️
+                </button>
+            </div>
+        </div>
+        
+        <div class="ai-status" id="ai-status">
+            <span class="status-text">Listo para escuchar</span>
+            <div class="status-indicator" id="status-indicator"></div>
+        </div>
+        
+        <div class="ai-buttons">
+            <button id="voice-btn" class="voice-record-btn">
+                <span class="mic-icon">🎙️</span>
+                <span class="btn-text">Hablar</span>
+            </button>
+            <button id="camera-btn" class="camera-btn">
+                <span class="camera-icon">📸</span>
+                <span class="btn-text">Analizar Comanda</span>
+            </button>
+        </div>
+        
+        <div class="ai-chat" id="ai-chat">
+            <div class="chat-message ai-message">
+                <strong>🤖 Asistente:</strong> ¡Hola! Puedo ayudarte a gestionar tu restaurante por voz. Prueba diciendo: "Agregar plato Arroz con Pollo, precio 15 soles, cantidad 20"
+            </div>
+        </div>
+    </div>
+
+    <!-- Cámara Modal -->
+    <div id="camera-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📸 Analizar Comanda</h3>
+                <button class="close-btn" id="close-camera">&times;</button>
+            </div>
+            <div class="camera-container">
+                <video id="camera-video" autoplay playsinline></video>
+                <canvas id="camera-canvas" style="display: none;"></canvas>
+                <div class="camera-controls">
+                    <button id="capture-btn" class="capture-btn">📷 Capturar</button>
+                    <button id="file-input-btn" class="file-btn">📁 Seleccionar Archivo</button>
+                    <input type="file" id="file-input" accept="image/*" style="display: none;">
+                </div>
+            </div>
+            <div id="image-preview" class="image-preview"></div>
+            <div id="analysis-result" class="analysis-result"></div>
+        </div>
+    </div>
+
+    <!-- Configuración de IA Modal -->
+    <div id="ai-settings-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>⚙️ Configuración del Asistente</h3>
+                <button class="close-btn" id="close-settings">&times;</button>
+            </div>
+            <div class="settings-content">
+                <div class="setting-item">
+                    <label for="api-key">🔑 Clave API de Gemini:</label>
+                    <input type="password" id="api-key" placeholder="Ingresa tu API key de Google Gemini">
+                    <small>Obtén tu clave gratuita en <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a></small>
+                </div>
+                <div class="setting-item">
+                    <label for="voice-speed">🗣️ Velocidad de voz:</label>
+                    <input type="range" id="voice-speed" min="0.5" max="2" step="0.1" value="1">
+                    <span id="speed-value">1.0x</span>
+                </div>
+                <div class="setting-item">
+                    <label for="voice-enabled">🔊 Respuestas por voz:</label>
+                    <input type="checkbox" id="voice-enabled" checked>
+                </div>
+                <button id="save-settings" class="save-btn">💾 Guardar Configuración</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <h1>🍽️ Control de Menú Diario</h1>
+            <div class="header-actions">
+                <button id="toggle-ai" class="toggle-ai-btn">🤖 Asistente IA</button>
+            </div>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="total-dishes">0</div>
+                <div class="stat-label">Platos en Menú</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="total-sales">0</div>
+                <div class="stat-label">Ventas de Hoy</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="total-revenue">S/0.00</div>
+                <div class="stat-label">Ingresos de Hoy</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="low-stock">0</div>
+                <div class="stat-label">Stock Bajo</div>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <section class="section dishes-section">
+                <div class="section-header">
+                    <h2>📋 Gestión de Platos</h2>
+                    <button id="add-dish-btn" class="add-btn">+ Agregar Plato</button>
+                </div>
+                
+                <div class="search-filter">
+                    <input type="text" id="search-dishes" placeholder="🔍 Buscar platos...">
+                    <select id="filter-category">
+                        <option value="">Todas las categorías</option>
+                        <option value="Desayuno">Desayuno</option>
+                        <option value="Almuerzo">Almuerzo</option>
+                        <option value="Cena">Cena</option>
+                        <option value="Bebidas">Bebidas</option>
+                        <option value="Postres">Postres</option>
+                    </select>
+                </div>
+                
+                <div id="dishes-list" class="dishes-list"></div>
+            </section>
+
+            <section class="section sales-section">
+                <div class="section-header">
+                    <h2>💰 Ventas del Día</h2>
+                    <button id="add-sale-btn" class="add-btn">+ Registrar Venta</button>
+                </div>
+                <div id="sales-list" class="sales-list"></div>
+            </section>
+        </div>
+
+        <section class="section analytics-section">
+            <h2>📊 Análisis y Reportes</h2>
+            <div class="analytics-grid">
+                <div class="chart-container">
+                    <h3>Ventas por Categoría</h3>
+                    <canvas id="category-chart"></canvas>
+                </div>
+                <div class="recent-activity">
+                    <h3>📈 Actividad Reciente</h3>
+                    <div id="recent-activity-list"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal para agregar plato -->
+    <div id="dish-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Agregar Nuevo Plato</h3>
+                <button class="close-btn" id="close-modal">&times;</button>
+            </div>
+            <form id="dish-form">
+                <div class="form-group">
+                    <label for="dish-name">Nombre del Plato:</label>
+                    <input type="text" id="dish-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="dish-price">Precio (S/):</label>
+                    <input type="number" id="dish-price" step="0.50" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="dish-quantity">Cantidad Disponible:</label>
+                    <input type="number" id="dish-quantity" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="dish-category">Categoría:</label>
+                    <select id="dish-category" required>
+                        <option value="">Seleccionar categoría</option>
+                        <option value="Desayuno">Desayuno</option>
+                        <option value="Almuerzo">Almuerzo</option>
+                        <option value="Cena">Cena</option>
+                        <option value="Bebidas">Bebidas</option>
+                        <option value="Postres">Postres</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="dish-description">Descripción (opcional):</label>
+                    <textarea id="dish-description" rows="3"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" id="cancel-btn" class="cancel-btn">Cancelar</button>
+                    <button type="submit" id="save-dish-btn" class="save-btn">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para registrar venta -->
+    <div id="sale-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Registrar Nueva Venta</h3>
+                <button class="close-btn" id="close-sale-modal">&times;</button>
+            </div>
+            <form id="sale-form">
+                <div class="form-group">
+                    <label for="sale-dish">Seleccionar Plato:</label>
+                    <select id="sale-dish" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="sale-quantity">Cantidad Vendida:</label>
+                    <input type="number" id="sale-quantity" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="sale-total">Total (S/):</label>
+                    <input type="number" id="sale-total" step="0.50" readonly>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" id="cancel-sale-btn" class="cancel-btn">Cancelar</button>
+                    <button type="submit" id="save-sale-btn" class="save-btn">Registrar Venta</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="ai-assistant.js"></script>
+    <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(registration => console.log('SW registered: ', registration))
+                    .catch(registrationError => console.log('SW registration failed: ', registrationError));
+            });
+        }
+    </script>
+</body>
+</html>

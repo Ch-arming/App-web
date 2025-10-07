@@ -1,0 +1,82 @@
+{
+  "name": "Control de Menú - Asistente IA",
+  "short_name": "Menú IA",
+  "description": "Sistema de gestión de restaurante con asistente de inteligencia artificial por voz",
+  "version": "2.0.0",
+  "display": "standalone",
+  "start_url": "./index.html",
+  "background_color": "#2196F3",
+  "theme_color": "#2196F3",
+  "orientation": "portrait-primary",
+  "categories": ["business", "productivity", "food"],
+  "lang": "es",
+  "scope": "./",
+  "icons": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0iIzIxOTZGMyIgcng9IjQiLz48cGF0aCBkPSJNNyA4SDEyTTcgMTJIMTdNNyAxNkgxNE02IDRIMThDMTguNTUyMyA0IDE5IDQuNDQ3NzIgMTkgNVYxOUMxOSAxOS41NTIzIDE4LjU1MjMgMjAgMTggMjBINkM1LjQ0NzcyIDIwIDUgMTkuNTUyMyA1IDE5VjVDNSA0LjQ0NzcyIDUuNDQ3NzIgNCA2IDRaIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPg==",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0iIzIxOTZGMyIgcng9IjQiLz48cGF0aCBkPSJNNyA4SDEyTTcgMTJIMTdNNyAxNkgxNE02IDRIMThDMTguNTUyMyA0IDE5IDQuNDQ3NzIgMTkgNVYxOUMxOSAxOS41NTIzIDE4LjU1MjMgMjAgMTggMjBINkM1LjQ0NzcyIDIwIDUgMTkuNTUyMyA1IDE5VjVDNSA0LjQ0NzcyIDUuNDQ3NzIgNCA2IDRaIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPg==",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxtYXNrIGlkPSJtYXNrIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IndoaXRlIiByeD0iNCIvPjwvbWFzaz48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiMyMTk2RjMiIHJ4PSI0Ii8+PHBhdGggZD0iTTcgOEgxMk03IDEySDE3TTcgMTZIMTRNNiA0SDE4QzE4LjU1MjMgNCAxOSA0LjQ0NzcyIDE5IDVWMTlDMTkgMTkuNTUyMyAxOC41NTIzIDIwIDE4IDIwSDZDNS40NDc3MiAyMCA1IDE5LjU1MjMgNSAxOVY1QzUgNC40NDc3MiA1LjQ0NzcyIDQgNiA0WiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L3N2Zz4=",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Agregar Plato",
+      "short_name": "+ Plato",
+      "description": "Agregar un nuevo plato al menú",
+      "url": "./index.html?action=add-dish",
+      "icons": [
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTYiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTIgNVYxOU0xOSAxMkg1IiBzdHJva2U9IiM0Q0FGNTASCIIOU3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L3N2Zz4=",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Registrar Venta",
+      "short_name": "+ Venta",
+      "description": "Registrar una nueva venta",
+      "url": "./index.html?action=add-sale",
+      "icons": [
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTYiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTIgMkwyIDdWMTdMMTIgMjJMMjIgMTdWN0wxMiAyWiIgc3Ryb2tlPSIjRkZDMTA3IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjwvc3ZnPg==",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Asistente IA",
+      "short_name": "IA",
+      "description": "Abrir asistente de inteligencia artificial",
+      "url": "./index.html?action=ai-assistant",
+      "icons": [
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTYiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTIgMkM2LjQ4IDIgMiA2LjQ4IDIgMTJDMiAxNy41MiA2LjQ4IDIyIDEyIDIyQzE3LjUyIDIyIDIyIDE3LjUyIDIyIDEyQzIyIDYuNDggMTcuNTIgMiAxMiAyWk05IDExQzguNDUgMTEgOCAxMC41NSA4IDEwQzggOS40NSA4LjQ1IDkgOSA5QzkuNTUgOSAxMCA5LjQ1IDEwIDEwQzEwIDEwLjU1IDkuNTUgMTEgOSAxMVpNMTUgMTFDMTQuNDUgMTEgMTQgMTAuNTUgMTQgMTBDMTQgOS40NSAxNC40NSA5IDE1IDlDMTUuNTUgOSAxNiA5LjQ1IDE2IDEwQzE2IDEwLjU1IDE1LjU1IDExIDE1IDExWk0xMiAxN0M5Ljc2IDE3IDcuOTIgMTUuNjQgNy4zNiAxMy43NkM4LjkzIDE1LjExIDEwLjM4IDE2IDEyIDE2QzEzLjYyIDE2IDE1LjA3IDE1LjExIDE2LjY0IDEzLjc2QzE2LjA4IDE1LjY0IDE0LjI0IDE3IDEyIDE3WiIgZmlsbD0iIzlDMjdCMCIvPjwvc3ZnPg==",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+menucontrol",
+      "url": "./index.html?action=%s"
+    }
+  ],
+  "prefer_related_applications": false
+}
