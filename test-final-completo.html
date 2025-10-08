@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧪 Test Final Completo - Verificación Pre-Entrega</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            border-left: 4px solid #4CAF50;
+        }
+        .error {
+            border-left-color: #f44336;
+            background: rgba(244,67,54,0.2);
+        }
+        .success {
+            border-left-color: #4CAF50;
+            background: rgba(76,175,80,0.2);
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .log {
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .status {
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            margin: 5px 0;
+            font-weight: bold;
+        }
+        .status.ok { background: #4CAF50; }
+        .status.error { background: #f44336; }
+        .status.testing { background: #ff9800; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test Final Completo</h1>
+        <p><strong>Verificación Pre-Entrega de la Aplicación</strong></p>
+        
+        <div class="test-section">
+            <h3>🔑 API Key</h3>
+            <input type="text" id="apiKey" placeholder="Pega tu API Key aquí" value="AIzaSyAJRguOUqoHFJTeDRZV3BZWOB60cA4ohCU">
+            <button onclick="startCompleteTest()">🚀 Ejecutar Test Completo</button>
+        </div>
+        
+        <div class="test-section">
+            <h3>📊 Estado de las Pruebas</h3>
+            <div id="testStatus">
+                <span class="status testing">⏳ Esperando inicio de pruebas...</span>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h3>📋 Log Detallado</h3>
+            <div id="testLog" class="log">Listo para ejecutar pruebas...</div>
+        </div>
+        
+        <div class="test-section">
+            <h3>🎯 Resultado Final</h3>
+            <div id="finalResult" style="font-size: 18px; font-weight: bold;">
+                Ejecuta las pruebas para ver el resultado...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let logElement = document.getElementById('testLog');
+        let statusElement = document.getElementById('testStatus');
+        let resultElement = document.getElementById('finalResult');
+
+        function log(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            logElement.textContent += `[${timestamp}] ${message}\n`;
+            logElement.scrollTop = logElement.scrollHeight;
+            console.log(message);
+        }
+
+        function updateStatus(status, type = 'testing') {
+            statusElement.innerHTML = `<span class="status ${type}">${status}</span>`;
+        }
+
+        function updateResult(result, isSuccess = false) {
+            resultElement.textContent = result;
+            resultElement.style.color = isSuccess ? '#4CAF50' : '#f44336';
+        }
+
+        async function startCompleteTest() {
+            const apiKey = document.getElementById('apiKey').value.trim();
+            
+            if (!apiKey) {
+                alert('❌ Por favor ingresa tu API Key');
+                return;
+            }
+
+            log('🚀 INICIANDO PRUEBA COMPLETA DE LA APLICACIÓN');
+            log('================================================');
+            updateStatus('🧪 Ejecutando pruebas...', 'testing');
+            updateResult('Pruebas en progreso...', false);
+
+            let allTestsPassed = true;
+            const testResults = [];
+
+            // Test 1: Formato de API Key
+            log('\n📝 Test 1: Verificando formato de API Key...');
+            if (apiKey.startsWith('AIza') && apiKey.length > 30) {
+                log('✅ Formato de API Key correcto');
+                testResults.push({name: 'Formato API Key', status: 'OK'});
+            } else {
+                log('❌ Formato de API Key incorrecto');
+                testResults.push({name: 'Formato API Key', status: 'FAIL'});
+                allTestsPassed = false;
+            }
+
+            // Test 2: Modelo de Chat (gemini-2.0-flash-001)
+            log('\n📝 Test 2: Probando modelo de chat (gemini-2.0-flash-001)...');
+            try {
+                const chatResult = await testChatModel(apiKey);
+                log(`✅ Chat funcional: ${chatResult}`);
+                testResults.push({name: 'Modelo Chat', status: 'OK'});
+            } catch (error) {
+                log(`❌ Error en modelo de chat: ${error.message}`);
+                testResults.push({name: 'Modelo Chat', status: 'FAIL'});
+                allTestsPassed = false;
+            }
+
+            // Test 3: Modelo de Análisis de Imágenes
+            log('\n📝 Test 3: Probando modelo de análisis de imágenes...');
+            try {
+                const imageResult = await testImageModel(apiKey);
+                log(`✅ Análisis de imágenes funcional: ${imageResult}`);
+                testResults.push({name: 'Análisis Imágenes', status: 'OK'});
+            } catch (error) {
+                log(`❌ Error en análisis de imágenes: ${error.message}`);
+                testResults.push({name: 'Análisis Imágenes', status: 'FAIL'});
+                allTestsPassed = false;
+            }
+
+            // Test 4: Verificar archivos de la aplicación
+            log('\n📝 Test 4: Verificando integridad de archivos...');
+            try {
+                await testApplicationFiles();
+                log('✅ Todos los archivos de la aplicación están presentes');
+                testResults.push({name: 'Archivos App', status: 'OK'});
+            } catch (error) {
+                log(`❌ Error en archivos: ${error.message}`);
+                testResults.push({name: 'Archivos App', status: 'FAIL'});
+                allTestsPassed = false;
+            }
+
+            // Mostrar resumen
+            log('\n🎯 RESUMEN DE PRUEBAS:');
+            log('========================');
+            testResults.forEach(test => {
+                log(`${test.status === 'OK' ? '✅' : '❌'} ${test.name}: ${test.status}`);
+            });
+
+            if (allTestsPassed) {
+                log('\n🎉 ¡TODAS LAS PRUEBAS PASARON!');
+                log('✅ La aplicación está lista para ser entregada');
+                log('✅ El modelo gemini-2.0-flash-001 funciona correctamente');
+                log('✅ Todos los componentes están operativos');
+                
+                updateStatus('🎉 ¡APLICACIÓN LISTA!', 'success');
+                updateResult('✅ APLICACIÓN COMPLETAMENTE FUNCIONAL - Lista para entrega', true);
+            } else {
+                log('\n❌ ALGUNAS PRUEBAS FALLARON');
+                log('⚠️ La aplicación requiere ajustes antes de la entrega');
+                
+                updateStatus('❌ Pruebas fallidas', 'error');
+                updateResult('❌ APLICACIÓN REQUIERE AJUSTES - No lista para entrega', false);
+            }
+        }
+
+        async function testChatModel(apiKey) {
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=${apiKey}`;
+            
+            const requestBody = {
+                contents: [{
+                    parts: [{
+                        text: "Responde solo con 'CHAT OK' si recibes este mensaje correctamente."
+                    }]
+                }],
+                generationConfig: {
+                    temperature: 0.1,
+                    maxOutputTokens: 100
+                }
+            };
+
+            log('🌐 Enviando request a modelo de chat...');
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(requestBody)
+            });
+
+            log(`📊 HTTP Status: ${response.status}`);
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`HTTP ${response.status}: ${errorText}`);
+            }
+
+            const data = await response.json();
+            if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                return data.candidates[0].content.parts[0].text;
+            } else {
+                throw new Error('Respuesta inesperada del modelo');
+            }
+        }
+
+        async function testImageModel(apiKey) {
+            // Crear una imagen de prueba simple (1x1 pixel rojo en base64)
+            const testImage = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==';
+            
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=${apiKey}`;
+            
+            const requestBody = {
+                contents: [{
+                    parts: [
+                        {
+                            text: "Describe esta imagen brevemente. Responde solo con 'IMAGEN OK' si puedes ver algo."
+                        },
+                        {
+                            inline_data: {
+                                mime_type: "image/png",
+                                data: testImage
+                            }
+                        }
+                    ]
+                }],
+                generationConfig: {
+                    temperature: 0.1,
+                    maxOutputTokens: 100
+                }
+            };
+
+            log('🖼️ Enviando request a modelo de análisis de imágenes...');
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(requestBody)
+            });
+
+            log(`📊 HTTP Status: ${response.status}`);
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`HTTP ${response.status}: ${errorText}`);
+            }
+
+            const data = await response.json();
+            if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                return data.candidates[0].content.parts[0].text;
+            } else {
+                throw new Error('Respuesta inesperada del modelo de imagen');
+            }
+        }
+
+        async function testApplicationFiles() {
+            const requiredFiles = [
+                'index.html',
+                'app.js', 
+                'ai-assistant.js',
+                'styles.css',
+                'manifest.json',
+                'sw.js'
+            ];
+
+            for (const file of requiredFiles) {
+                try {
+                    const response = await fetch(file);
+                    if (!response.ok) {
+                        throw new Error(`Archivo ${file} no encontrado`);
+                    }
+                    log(`📄 Archivo verificado: ${file}`);
+                } catch (error) {
+                    throw new Error(`Error verificando ${file}: ${error.message}`);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
