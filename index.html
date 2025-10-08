@@ -3,244 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control de Menú - Asistente IA</title>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#667eea">
+    <title>Sistema Control de Menú</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAABhGlDQ1BJQ0MgcHJvZmlsZQAAKJF9kT1Iw0AcxV9TpSIVBzuIOGSoThZERRy1CkWoEGqFVh1MLv2CJg1Jiouj4Fpw8GOx6uDirKuDqyAIfoA4OTopukiJ/0sKLWI9OO7Hu3uPu3eAUC8zzeoYBzTdNlOJuJjJropdr/AhiEEMIyQzy5iToiQ8x9c9fHy9i/Es73N/jj41azEAjwAHzDRsk68T+zZtg+M94YKyxKrwOXHVkhckfuS64vEb54LLPj4zFsm2eWKBWCy0sdLGrGRKcJ7YoUw65YXZo16SJq4y+/1ZlS5J3qQ3HcHFKJa2RyFsRQhJJyggo4oNVGCjTStOirjdJoMPujRhiZyVY8DCIo8VoESd52bx6V5T8T/7Wd3gDQ5qQSGg68WxPsaBbt0g0Nq39be39k58AniekGvd8GYdGL6T3u1oYRVoGQ1NrjtafHI6sL3DjNF0K7WnlS1NfH24n3hNnLt2vXWfk3cg9e0ykU/AQBASKHvd596+k3t+fZzWZfsGADhM6LXh0nKLqAAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFl6AAATHAAAExwAd/VNMAAAAZJJREFUWMPtlj9IAmEYxp+8hXAo20IcamtoCBucGgJbGhocGlroT1vQULQ5t0TL1ODQEBQc+gMeLS0NLkHQ4lBOTp7QJKLpUpC/hnfRS9DuTt9wAOHw973f9/K+77s8QojnH/VNhpMnhRByCgC8iPh5Wf8hAJn/8gK7/eN4AWtBq9UCT9p9S4T/GQAAM9PGz8RxHACRaLOWCjYKwOdyweN0iuzlZYhEIhgNh8Ek6zQajUEonhgUlhNO9TcbnAwCAERbxDEMnEKC/f/YrVYLPqhOKA==">
 </head>
 <body>
-    <!-- Asistente IA -->
-    <div id="ai-assistant" class="ai-assistant">
-        <div class="ai-header">
-            <h3>🤖 Asistente IA</h3>
-            <div class="ai-controls">
-                <button id="voice-toggle" class="voice-toggle" title="Alternar respuestas por voz">🔊</button>
-                <button id="settings-btn" class="settings-btn" title="Configurar IA">⚙️</button>
-            </div>
-        </div>
-        
-        <div id="ai-status" class="ai-status">
-            <div id="status-indicator" class="status-indicator ready"></div>
-            <span class="status-text">Listo para escuchar</span>
-        </div>
-        
-        <div class="ai-actions">
-            <button id="voice-btn" class="voice-btn" title="Activar comando de voz">
-                <span class="mic-icon">🎤</span>
-                <span class="btn-text">Hablar</span>
-            </button>
-            <button id="camera-btn" class="camera-btn" title="Analizar comanda con cámara">
-                <span class="camera-icon">📸</span>
-                <span class="btn-text">Cámara</span>
-            </button>
-        </div>
-        
-        <div id="ai-chat" class="ai-chat"></div>
-    </div>
-
-    <!-- Cámara Modal (MEJORADO) -->
-    <div id="camera-modal" class="modal">
-        <div class="modal-content camera-modal-content">
-            <div class="modal-header">
-                <h3>📸 Analizar Comanda</h3>
-                <button class="close-btn" id="close-camera">&times;</button>
-            </div>
-            <div class="camera-container">
-                <video id="camera-video" autoplay playsinline muted></video>
-                <canvas id="camera-canvas" style="display: none;"></canvas>
-                <div class="camera-controls">
-                    <button id="capture-btn" class="capture-btn">📷 Capturar</button>
-                    <button id="switch-camera-btn" class="switch-camera-btn">🔄 Cámara Posterior</button>
-                    <button id="file-input-btn" class="file-btn">📁 Seleccionar Archivo</button>
-                    <input type="file" id="file-input" accept="image/*" style="display: none;">
-                </div>
-            </div>
-            <div id="image-preview" class="image-preview"></div>
-            <div id="analysis-result" class="analysis-result"></div>
-        </div>
-    </div>
-
-    <!-- Configuración de IA Modal -->
-    <div id="ai-settings-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>⚙️ Configuración del Asistente</h3>
-                <button class="close-btn" id="close-settings">&times;</button>
-            </div>
-            <div class="settings-content">
-                <div class="setting-item">
-                    <label for="api-key">🔑 Clave API de Gemini:</label>
-                    <input type="password" id="api-key" placeholder="Ingresa tu API key de Google Gemini">
-                    <small>Obtén tu clave gratuita en <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a></small>
-                </div>
-                <div class="setting-item">
-                    <label for="voice-speed">🗣️ Velocidad de voz:</label>
-                    <input type="range" id="voice-speed" min="0.5" max="2" step="0.1" value="1">
-                    <span id="speed-value">1.0x</span>
-                </div>
-                <div class="setting-item">
-                    <label for="voice-enabled">🔊 Respuestas por voz:</label>
-                    <input type="checkbox" id="voice-enabled" checked>
-                </div>
-                <button id="save-settings" class="save-btn">💾 Guardar Configuración</button>
-            </div>
-        </div>
-    </div>
-
     <div class="container">
+        <!-- Header -->
         <header class="header">
-            <h1>🍽️ Control de Menú Diario</h1>
-            <div class="header-actions">
-                <button id="toggle-ai" class="toggle-ai-btn">🤖 Asistente IA</button>
+            <div class="header-content">
+                <h1>🍽️ Control de Menú</h1>
+                <div class="header-buttons">
+                    <button id="open-config-button" class="config-button" title="Configuración">
+                        ⚙️
+                    </button>
+                </div>
             </div>
         </header>
 
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-number" id="total-dishes">0</div>
-                <div class="stat-label">Platos en Menú</div>
+        <!-- Asistente IA -->
+        <section class="ai-section">
+            <div class="ai-header">
+                <h2>🤖 Asistente IA</h2>
+                <button id="toggle-ai" class="toggle-button">Ocultar IA</button>
             </div>
-            <div class="stat-card">
-                <div class="stat-number" id="total-sales">0</div>
-                <div class="stat-label">Ventas de Hoy</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="total-revenue">S/0.00</div>
-                <div class="stat-label">Ingresos de Hoy</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="low-stock">0</div>
-                <div class="stat-label">Stock Bajo</div>
-            </div>
-        </div>
+            
+            <div id="ai-container" class="ai-container">
+                <!-- Chat Messages -->
+                <div id="chat-container" class="chat-container">
+                    <div id="chat-messages" class="chat-messages">
+                        <div class="message assistant-message">
+                            <div class="message-avatar">🤖</div>
+                            <div class="message-content">
+                                ¡Hola! Soy tu asistente IA para el restaurante. ¿En qué puedo ayudarte hoy?
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="content-grid">
-            <section class="section dishes-section">
-                <div class="section-header">
-                    <h2>📋 Gestión de Platos</h2>
-                    <button id="add-dish-btn" class="add-btn">+ Agregar Plato</button>
+                <!-- Input Controls -->
+                <div class="input-controls">
+                    <div class="input-group">
+                        <input type="text" id="user-input" placeholder="Escribe tu mensaje..." class="message-input">
+                        <button id="send-button" class="send-button">📤</button>
+                        <button id="voice-button" class="voice-button" title="Hablar">🎤</button>
+                        <button id="toggle-voice" class="voice-toggle" title="Activar/Desactivar voz">🔊</button>
+                    </div>
+                </div>
+
+                <!-- Camera Controls -->
+                <div class="camera-controls">
+                    <button id="open-camera-button" class="camera-button">
+                        📷 Analizar Comanda
+                    </button>
+                    <input type="file" id="comanda-file-input" accept="image/*" class="file-input">
+                    <label for="comanda-file-input" class="file-button">
+                        📁 Cargar Archivo
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <!-- Menu Control Section -->
+        <section class="menu-section">
+            <div class="section-header">
+                <h2>📋 Control de Menú Diario</h2>
+            </div>
+            
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <h3>Platos Disponibles</h3>
+                    <div class="available-dishes" id="available-dishes">
+                        <div class="dish-item">
+                            <span class="dish-name">🥗 Ensalada César</span>
+                            <span class="dish-price">$12.99</span>
+                            <span class="dish-status available">Disponible</span>
+                        </div>
+                        <div class="dish-item">
+                            <span class="dish-name">🍝 Pasta Carbonara</span>
+                            <span class="dish-price">$14.99</span>
+                            <span class="dish-status available">Disponible</span>
+                        </div>
+                        <div class="dish-item">
+                            <span class="dish-name">🥩 Filete de Res</span>
+                            <span class="dish-price">$24.99</span>
+                            <span class="dish-status unavailable">Agotado</span>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="search-filter">
-                    <input type="text" id="search-dishes" placeholder="🔍 Buscar platos...">
-                    <select id="filter-category">
-                        <option value="">Todas las categorías</option>
-                        <option value="Desayuno">Desayuno</option>
-                        <option value="Almuerzo">Almuerzo</option>
-                        <option value="Cena">Cena</option>
-                        <option value="Bebidas">Bebidas</option>
-                        <option value="Postres">Postres</option>
-                    </select>
-                </div>
-                
-                <div id="dishes-list" class="dishes-list"></div>
-            </section>
-
-            <section class="section sales-section">
-                <div class="section-header">
-                    <h2>💰 Ventas del Día</h2>
-                    <button id="add-sale-btn" class="add-btn">+ Registrar Venta</button>
-                </div>
-                <div id="sales-list" class="sales-list"></div>
-            </section>
-        </div>
-
-        <section class="section analytics-section">
-            <h2>📊 Análisis y Reportes</h2>
-            <div class="analytics-grid">
-                <div class="chart-container">
-                    <h3>Ventas por Hora</h3>
-                    <canvas id="sales-chart" width="300" height="200"></canvas>
-                </div>
-                <div class="chart-container">
-                    <h3>Platos Más Vendidos</h3>
-                    <div id="top-dishes" class="top-dishes-list"></div>
+                <div class="menu-card">
+                    <h3>Estadísticas del Día</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">45</div>
+                            <div class="stat-label">Órdenes</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">$680</div>
+                            <div class="stat-label">Ventas</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">12</div>
+                            <div class="stat-label">Platos Top</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">95%</div>
+                            <div class="stat-label">Satisfacción</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
     </div>
 
-    <!-- Modal para agregar/editar plato -->
-    <div id="dish-modal" class="modal">
-        <div class="modal-content">
+    <!-- Camera Modal -->
+    <div id="camera-modal" class="modal">
+        <div class="modal-content camera-modal-content">
             <div class="modal-header">
-                <h3 id="modal-title">Agregar Nuevo Plato</h3>
-                <button class="close-btn" id="close-modal">&times;</button>
+                <h3>📷 Capturar Comanda</h3>
+                <button id="close-camera-button" class="close-button">✖️</button>
             </div>
-            <form id="dish-form">
-                <div class="form-group">
-                    <label for="dish-name">Nombre del Plato:</label>
-                    <input type="text" id="dish-name" required>
+            
+            <div class="camera-container">
+                <video id="camera-preview" class="camera-preview" autoplay muted playsinline></video>
+                <canvas id="capture-canvas" class="capture-canvas"></canvas>
+                
+                <div id="image-preview-container" class="image-preview-container">
+                    <img id="preview-image" class="preview-image" alt="Vista previa">
                 </div>
-                <div class="form-group">
-                    <label for="dish-price">Precio (S/):</label>
-                    <input type="number" id="dish-price" step="0.50" min="0" required>
-                </div>
-                <div class="form-group">
-                    <label for="dish-quantity">Cantidad Disponible:</label>
-                    <input type="number" id="dish-quantity" min="0" required>
-                </div>
-                <div class="form-group">
-                    <label for="dish-category">Categoría:</label>
-                    <select id="dish-category" required>
-                        <option value="">Selecciona una categoría</option>
-                        <option value="Desayuno">Desayuno</option>
-                        <option value="Almuerzo">Almuerzo</option>
-                        <option value="Cena">Cena</option>
-                        <option value="Bebidas">Bebidas</option>
-                        <option value="Postres">Postres</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="dish-description">Descripción (opcional):</label>
-                    <textarea id="dish-description" rows="3"></textarea>
-                </div>
-                <div class="modal-actions">
-                    <button type="button" id="cancel-btn" class="cancel-btn">Cancelar</button>
-                    <button type="submit" id="save-dish-btn" class="save-btn">Guardar</button>
-                </div>
-            </form>
+            </div>
+            
+            <div class="camera-controls-modal">
+                <button id="switch-camera-button" class="camera-control-button">
+                    🔄 Cambiar Cámara
+                </button>
+                <button id="capture-image-button" class="camera-control-button primary">
+                    📸 Capturar
+                </button>
+                <button id="analyze-button" class="camera-control-button analyze" style="display: none;">
+                    🔍 Analizar Comanda
+                </button>
+            </div>
         </div>
     </div>
 
-    <!-- Modal para registrar venta -->
-    <div id="sale-modal" class="modal">
+    <!-- Configuration Modal -->
+    <div id="config-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Registrar Nueva Venta</h3>
-                <button class="close-btn" id="close-sale-modal">&times;</button>
+                <h3>⚙️ Configuración API</h3>
+                <button id="close-config-button" class="close-button">✖️</button>
             </div>
-            <form id="sale-form">
-                <div class="form-group">
-                    <label for="sale-dish">Seleccionar Plato:</label>
-                    <select id="sale-dish" required></select>
+            
+            <div class="config-content">
+                <div class="config-section">
+                    <h4>🔑 Clave API de Gemini</h4>
+                    <p class="config-description">
+                        Para usar el asistente IA, necesitas una clave API de Google Gemini.
+                        <br><strong>Cómo obtenerla:</strong>
+                    </p>
+                    <ol class="config-steps">
+                        <li>Ve a <a href="https://makersuite.google.com/app/apikey" target="_blank">Google AI Studio</a></li>
+                        <li>Inicia sesión con tu cuenta de Google</li>
+                        <li>Haz clic en "Create API Key"</li>
+                        <li>Selecciona un proyecto o crea uno nuevo</li>
+                        <li>Copia la clave generada y pégala aquí</li>
+                    </ol>
+                    
+                    <div class="input-group">
+                        <input type="password" id="api-key-input" placeholder="Pega tu API key aquí..." class="config-input">
+                        <button id="save-config" class="save-button">💾 Guardar</button>
+                    </div>
+                    
+                    <div class="config-note">
+                        <strong>⚠️ Nota de Seguridad:</strong> Tu clave API se guarda solo en tu dispositivo.
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="sale-quantity">Cantidad Vendida:</label>
-                    <input type="number" id="sale-quantity" min="1" required>
-                </div>
-                <div class="form-group">
-                    <label for="sale-total">Total (S/):</label>
-                    <input type="number" id="sale-total" step="0.50" readonly>
-                </div>
-                <div class="modal-actions">
-                    <button type="button" id="cancel-sale-btn" class="cancel-btn">Cancelar</button>
-                    <button type="submit" id="save-sale-btn" class="save-btn">Registrar Venta</button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 
-    <script src="ai-assistant.js"></script>
     <script src="app.js"></script>
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(registration => console.log('SW registered: ', registration))
-                    .catch(registrationError => console.log('SW registration failed: ', registrationError));
-            });
-        }
-    </script>
+    <script src="ai-assistant.js"></script>
 </body>
 </html>

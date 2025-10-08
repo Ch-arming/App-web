@@ -1,122 +1,250 @@
-# 🍽️ Control de Menú Diario con Asistente IA
+# 🍽️ Sistema de Control de Menú v2.1 - Robusto
 
-> **Versión 2.0 Corregida** - Aplicación web progresiva (PWA) para la gestión de restaurantes con inteligencia artificial integrada.
+## 📱 Aplicación Web Progresiva (PWA) con Asistente IA Integrado
 
-## ✨ **Nuevas Características Corregidas**
-
-### 📸 **Cámara Mejorada**
-- ✅ **Botón para cambiar entre cámara frontal y posterior**
-- ✅ **Captura de imagen corregida** - Ya no falla al tomar fotos
-- ✅ **Selección de archivos mejorada** - Preview y validación incluida
-- ✅ **Mejor manejo de errores** - Mensajes claros y informativos
-
-### 🤖 **Asistente de IA Potente**
-- **Control por voz completo** - Controla toda la aplicación con comandos de voz
-- **Análisis de comandas** - Toma foto de órdenes escritas y las digitaliza automáticamente
-- **Respuestas por voz configurables** - Activa/desactiva las respuestas habladas
-- **Integración con Google Gemini** - IA de última generación GRATUITA
-
-### 💰 **Gestión Completa**
-- **Precios en Soles Peruanos (S/)** - Moneda local configurada
-- **Control de inventario en tiempo real**
-- **Estadísticas automáticas**
-- **Interfaz responsive** - Optimizada para celulares
-
-## 🚀 **Instalación y Configuración**
-
-### **Paso 1: Subir Archivos a GitHub**
-1. Sube todos los archivos de la carpeta `control-menu-web-v2-fixed/` a tu repositorio
-2. Asegúrate de que GitHub Pages esté activado
-3. Accede a: `https://tu-usuario.github.io/tu-repositorio`
-
-### **Paso 2: Obtener API Key de Gemini (GRATIS)**
-1. Ve a [Google AI Studio](https://aistudio.google.com/app/apikey)
-2. Inicia sesión con tu cuenta de Google
-3. Haz clic en **"Create API Key"**
-4. Copia la clave generada
-
-### **Paso 3: Configurar la Aplicación**
-1. Abre la aplicación web
-2. Haz clic en **"⚙️ Configurar IA"**
-3. Pega tu API key de Gemini
-4. Configura las opciones de voz a tu gusto
-5. Haz clic en **"Guardar"**
-
-## 🎤 **Comandos de Voz Disponibles**
-
-### **Gestión de Platos**
-- *"Agregar plato Caldo de Gallina precio 6 soles cantidad 13 categoría Desayuno"*
-- *"Editar plato Arroz con Pollo cambiar precio a 8 soles"*
-- *"Eliminar plato Sopa de Verduras"*
-
-### **Ventas y Consultas**
-- *"¿Cuántas ventas tengo hoy?"*
-- *"Mostrar estadísticas"*
-- *"Registrar venta de 2 Caldo de Gallina"*
-- *"¿Qué platos tienen stock bajo?"*
-
-### **Análisis de Comandas**
-- *"Analizar comanda"* - Abre la cámara para escanear órdenes escritas
-- *"Tomar foto de la orden"* - Procesa automáticamente los datos
-
-## 📸 **Cómo Usar la Cámara**
-
-### **Capturar Imagen**
-1. Haz clic en **"📸 Cámara"**
-2. Usa **"🔄 Cambiar Cámara"** para alternar entre frontal/posterior
-3. Enfoca la comanda o menú
-4. Haz clic en **"📷 Capturar"**
-5. Espera el análisis automático
-
-### **Seleccionar Archivo**
-1. Haz clic en **"📁 Seleccionar Archivo"**
-2. Elige una foto desde tu galería
-3. La IA procesará la imagen automáticamente
-
-## 🔧 **Características Técnicas**
-
-- **PWA Completa** - Instalable en el teléfono
-- **Funciona Offline** - Datos guardados localmente
-- **Responsive Design** - Adaptado a todos los dispositivos
-- **Google Gemini 2.0 Flash** - IA de última generación
-- **Web Speech API** - Reconocimiento de voz nativo
-- **Camera API** - Acceso a cámaras frontal y posterior
-
-## 🌐 **Compatibilidad**
-
-- ✅ **Chrome/Edge** (Recomendado)
-- ✅ **Safari** (iOS/macOS)
-- ✅ **Firefox** (Limitado reconocimiento de voz)
-- ✅ **Opera**
-
-## 📊 **Límites de la Versión Gratuita**
-
-**Google Gemini API (GRATIS):**
-- 15 peticiones por minuto
-- 1,500 peticiones por día
-- 1 millón de tokens por mes
-
-> 💰 **¡Más que suficiente para un restaurante!** Equivale a cientos de comandos de voz y análisis de imágenes diarios.
-
-## 🔒 **Seguridad**
-
-- Tu API key se guarda **solo en tu navegador**
-- Los datos **no se envían a servidores externos**
-- **Funciona completamente offline** después de cargar
-
-## 🎆 **¡Listo para Usar!**
-
-Esta versión corregida soluciona todos los problemas reportados:
-- ✅ Cámara frontal/posterior funcionando
-- ✅ Captura de imagen sin errores
-- ✅ Selección de archivos mejorada
-- ✅ Interfaz más intuitiva
-- ✅ Mejor manejo de errores
-
-**¡Tu restaurante ahora tiene un asistente de IA profesional!** 🤖✨
+Una aplicación completa para la gestión de menús de restaurante con inteligencia artificial avanzada para análisis de comandas y asistencia al usuario.
 
 ---
 
-**Desarrollado por:** MiniMax Agent  
-**Versión:** 2.0 Corregida  
-**Fecha:** Octubre 2025
+## ✨ **Características Principales**
+
+### 🤖 **Asistente de Inteligencia Artificial**
+- **Chat interactivo** con tecnología Google Gemini
+- **Reconocimiento de voz** para comandos hablados
+- **Síntesis de voz** para respuestas audibles
+- **Análisis OCR de comandas** mediante cámara o archivo
+- **Cambio automático de cámara** (frontal/trasera)
+
+### 📊 **Control de Menú**
+- **Gestión en tiempo real** del estado de platos
+- **Estadísticas dinámicas** de ventas y pedidos
+- **Toggle rápido** de disponibilidad
+- **Notificaciones visuales** de cambios
+
+### 🔧 **Características Técnicas**
+- **PWA completa** - Instalable en dispositivos
+- **Funcionamiento offline** con Service Worker
+- **Diseño responsive** para móviles y desktop
+- **Interfaz intuitiva** con animaciones suaves
+- **Almacenamiento local** seguro de configuración
+
+---
+
+## 🚀 **Configuración Inicial**
+
+### **Paso 1: Obtener API Key de Google Gemini**
+
+1. **Accede a Google AI Studio:**
+   - Ve a: [https://makersuite.google.com/app/apikey](https://makersuite.google.com/app/apikey)
+   - Inicia sesión con tu cuenta de Google
+
+2. **Crear la API Key:**
+   - Haz clic en **"Create API Key"**
+   - Selecciona un proyecto existente o crea uno nuevo
+   - Haz clic en **"Create"**
+   - **¡IMPORTANTE!** Copia la clave inmediatamente
+
+3. **Configurar en la App:**
+   - Abre la aplicación
+   - Toca el botón **⚙️** en la esquina superior derecha
+   - Pega tu API key en el campo correspondiente
+   - Haz clic en **"💾 Guardar"**
+
+### **Paso 2: Configuración de Seguridad (Recomendado)**
+
+Para mayor seguridad, configura restricciones HTTP en tu API key:
+
+1. Ve a [Google Cloud Console](https://console.cloud.google.com/apis/credentials)
+2. Encuentra tu API key y haz clic en el ícono de edición
+3. En "Application restrictions", selecciona "HTTP referrers"
+4. Agrega: `https://tu-dominio.github.io/*`
+5. Guarda los cambios
+
+---
+
+## 📱 **Instalación como PWA**
+
+### **En Móviles:**
+- **Android Chrome:** Toca "⋮" → "Instalar app"
+- **iOS Safari:** Toca "🔗" → "Agregar a pantalla de inicio"
+
+### **En Desktop:**
+- **Chrome/Edge:** Busca el ícono "💻" en la barra de direcciones
+- **Firefox:** Menú → "Instalar sitio como app"
+
+---
+
+## 🎯 **Guía de Uso**
+
+### **🤖 Asistente IA**
+
+#### **Chat de Texto:**
+1. Escribe tu mensaje en el campo de texto
+2. Presiona **"📤"** o **Enter** para enviar
+3. El asistente responderá automáticamente
+
+#### **Control por Voz:**
+1. Toca el botón **"🎤"** para comenzar a hablar
+2. Habla claramente en español
+3. El mensaje se enviará automáticamente
+
+#### **Análisis de Comandas:**
+1. **Por Cámara:**
+   - Toca **"📷 Analizar Comanda"**
+   - Usa **"🔄 Cambiar Cámara"** para alternar entre frontal/trasera
+   - Apunta la cámara al documento
+   - Toca **"📸 Capturar"**
+   - Toca **"🔍 Analizar Comanda"**
+
+2. **Por Archivo:**
+   - Toca **"📁 Cargar Archivo"**
+   - Selecciona una imagen de tu dispositivo
+   - Toca **"🔍 Analizar Comanda"**
+
+### **📊 Control de Menú**
+
+#### **Cambiar Disponibilidad:**
+- **Toca cualquier plato** para alternar entre "Disponible" y "Agotado"
+- Recibirás una notificación visual del cambio
+
+#### **Ver Estadísticas:**
+- Las estadísticas se actualizan automáticamente cada 30 segundos
+- Incluyen: órdenes, ventas, platos top y satisfacción
+
+---
+
+## 🔧 **Solución de Problemas**
+
+### **❌ "API Key no configurada"**
+- **Problema:** No se ha configurado la clave de Gemini
+- **Solución:** Sigue el "Paso 1" de configuración inicial
+
+### **❌ "La API key no es válida"**
+- **Problema:** La clave introducida es incorrecta o está restringida
+- **Solución:** 
+  1. Verifica que hayas copiado la clave completa
+  2. Comprueba las restricciones en Google Cloud Console
+  3. Genera una nueva clave si es necesario
+
+### **❌ "Se ha excedido la cuota de la API"**
+- **Problema:** Has agotado tu cuota gratuita de Gemini
+- **Solución:** Espera a que se renueve tu cuota o configura facturación
+
+### **❌ Error de cámara**
+- **Problema:** No se puede acceder a la cámara
+- **Solución:**
+  1. Verifica permisos de cámara en tu navegador
+  2. Asegúrate de usar HTTPS
+  3. Intenta recargar la página
+
+### **❌ Reconocimiento de voz no funciona**
+- **Problema:** El navegador no soporta reconocimiento de voz
+- **Solución:**
+  1. Usa Chrome/Edge en dispositivos compatibles
+  2. Verifica permisos de micrófono
+  3. Asegúrate de usar HTTPS
+
+---
+
+## 🛠️ **Características Técnicas Avanzadas**
+
+### **📱 PWA Features:**
+- ✅ **Instalable** en todos los dispositivos
+- ✅ **Funciona offline** para funciones básicas
+- ✅ **Actualizaciones automáticas** del cache
+- ✅ **Notificaciones push** (futuro)
+- ✅ **Sincronización en segundo plano** (futuro)
+
+### **🎨 Diseño:**
+- ✅ **Material Design** moderno
+- ✅ **Responsive** - Móvil, tablet, desktop
+- ✅ **Modo oscuro** automático según preferencias del sistema
+- ✅ **Animaciones suaves** y transiciones
+- ✅ **Accesibilidad** optimizada
+
+### **🔐 Seguridad:**
+- ✅ **Almacenamiento local** encriptado
+- ✅ **HTTPS** obligatorio para funciones avanzadas
+- ✅ **No tracking** - Datos permanecen en tu dispositivo
+- ✅ **API key segura** - No se comparte con terceros
+
+---
+
+## 📋 **Requisitos del Sistema**
+
+### **Navegadores Compatibles:**
+- ✅ **Chrome 90+** (Recomendado)
+- ✅ **Edge 90+** 
+- ✅ **Safari 14+**
+- ✅ **Firefox 88+**
+
+### **Dispositivos:**
+- ✅ **Android 7.0+**
+- ✅ **iOS 13+**
+- ✅ **Windows 10+**
+- ✅ **macOS 10.15+**
+- ✅ **Linux** (distribuciones modernas)
+
+### **Conexión:**
+- 📶 **Internet requerido** para funciones IA
+- 💾 **Funciona offline** para gestión básica del menú
+
+---
+
+## 🆕 **Novedades en v2.1**
+
+### **🔧 Mejoras de Robustez:**
+- ✅ **Manejo robusto de errores** sin API key
+- ✅ **Mensajes informativos** sobre configuración
+- ✅ **Guías paso a paso** integradas en la app
+- ✅ **Validación mejorada** de entradas
+- ✅ **Recuperación automática** de errores de conexión
+
+### **🎯 Nuevas Características:**
+- ✅ **Modal de configuración** mejorado con instrucciones
+- ✅ **Detección automática** de problemas de configuración
+- ✅ **Mensajes de estado** más claros
+- ✅ **Enlaces directos** a herramientas de configuración
+
+---
+
+## 🤝 **Soporte y Contacto**
+
+### **📚 Documentación:**
+- Lee esta guía completa antes de usar la aplicación
+- Todos los pasos están detallados para facilitar el uso
+
+### **🐛 Reportar Problemas:**
+- Describe claramente el problema encontrado
+- Incluye información del navegador y dispositivo
+- Proporciona pasos para reproducir el error
+
+### **💡 Sugerencias:**
+- Las ideas para nuevas funciones son bienvenidas
+- Comparte tus casos de uso específicos
+
+---
+
+## 📄 **Licencia y Términos**
+
+### **📋 Uso:**
+- ✅ **Uso comercial** permitido
+- ✅ **Modificación** permitida
+- ✅ **Distribución** permitida
+
+### **⚠️ Responsabilidades:**
+- El usuario es responsable de su API key de Google
+- Los costos de la API Gemini corren por cuenta del usuario
+- Los datos se procesan según los términos de Google AI
+
+---
+
+## 🚀 **¡Comienza Ahora!**
+
+1. **Obtén tu API key** siguiendo el "Paso 1"
+2. **Configura la aplicación** con el botón ⚙️
+3. **¡Disfruta de tu asistente IA** para restaurante!
+
+---
+
+**¡Bienvenido al futuro de la gestión de restaurantes con IA! 🍽️🤖**
