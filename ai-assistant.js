@@ -240,8 +240,8 @@ class AIAssistant {
     }
 
     async getAIResponse(message) {
-        // Use the correct Gemini API endpoint
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${this.apiKey}`;
+        // CORRECTED: Updated API endpoint for Gemini 1.5 Flash (2025)
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${this.apiKey}`;
         
         const requestBody = {
             contents: [{
@@ -254,8 +254,29 @@ class AIAssistant {
                 topK: 40,
                 topP: 0.95,
                 maxOutputTokens: 1024,
-            }
+            },
+            safetySettings: [
+                {
+                    category: "HARM_CATEGORY_HARASSMENT",
+                    threshold: "BLOCK_MEDIUM_AND_ABOVE"
+                },
+                {
+                    category: "HARM_CATEGORY_HATE_SPEECH",
+                    threshold: "BLOCK_MEDIUM_AND_ABOVE"
+                },
+                {
+                    category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+                    threshold: "BLOCK_MEDIUM_AND_ABOVE"
+                },
+                {
+                    category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+                    threshold: "BLOCK_MEDIUM_AND_ABOVE"
+                }
+            ]
         };
+
+        console.log('🔧 DEBUGGING - API URL:', apiUrl);
+        console.log('🔧 DEBUGGING - Request body:', JSON.stringify(requestBody, null, 2));
 
         const response = await fetch(apiUrl, {
             method: 'POST',
@@ -265,21 +286,29 @@ class AIAssistant {
             body: JSON.stringify(requestBody)
         });
 
+        console.log('🔧 DEBUGGING - HTTP Status:', response.status);
+        console.log('🔧 DEBUGGING - Response OK:', response.ok);
+
         if (!response.ok) {
+            const errorText = await response.text();
+            console.error('🔧 DEBUGGING - Error response:', errorText);
+            
             if (response.status === 400) {
                 throw new Error('API_KEY_INVALID');
             } else if (response.status === 429) {
                 throw new Error('QUOTA_EXCEEDED');
             } else {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
             }
         }
 
         const data = await response.json();
+        console.log('🔧 DEBUGGING - Response data:', JSON.stringify(data, null, 2));
         
-        if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+        if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts) {
             return data.candidates[0].content.parts[0].text;
         } else {
+            console.error('🔧 DEBUGGING - Unexpected response structure:', data);
             throw new Error('Respuesta inesperada de la API');
         }
     }
@@ -516,7 +545,8 @@ class AIAssistant {
 
     async analyzeImageWithAI(imageDataUrl) {
         const base64Image = imageDataUrl.split(',')[1];
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-vision:generateContent?key=${this.apiKey}`;
+        // CORRECTED: Updated API endpoint for Gemini 1.5 Flash (supports both text and images)
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${this.apiKey}`;
         
         const requestBody = {
             contents: [{
@@ -537,8 +567,29 @@ class AIAssistant {
                 topK: 32,
                 topP: 1,
                 maxOutputTokens: 2048,
-            }
+            },
+            safetySettings: [
+                {
+                    category: "HARM_CATEGORY_HARASSMENT",
+                    threshold: "BLOCK_MEDIUM_AND_ABOVE"
+                },
+                {
+                    category: "HARM_CATEGORY_HATE_SPEECH",
+                    threshold: "BLOCK_MEDIUM_AND_ABOVE"
+                },
+                {
+                    category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+                    threshold: "BLOCK_MEDIUM_AND_ABOVE"
+                },
+                {
+                    category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+                    threshold: "BLOCK_MEDIUM_AND_ABOVE"
+                }
+            ]
         };
+
+        console.log('🔧 DEBUGGING - Image Analysis API URL:', apiUrl);
+        console.log('🔧 DEBUGGING - Image Analysis Request body:', JSON.stringify(requestBody, null, 2));
 
         const response = await fetch(apiUrl, {
             method: 'POST',
@@ -548,21 +599,28 @@ class AIAssistant {
             body: JSON.stringify(requestBody)
         });
 
+        console.log('🔧 DEBUGGING - Image Analysis HTTP Status:', response.status);
+
         if (!response.ok) {
+            const errorText = await response.text();
+            console.error('🔧 DEBUGGING - Image Analysis Error response:', errorText);
+            
             if (response.status === 400) {
                 throw new Error('API_KEY_INVALID');
             } else if (response.status === 429) {
                 throw new Error('QUOTA_EXCEEDED');
             } else {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
             }
         }
 
         const data = await response.json();
+        console.log('🔧 DEBUGGING - Image Analysis Response data:', JSON.stringify(data, null, 2));
         
-        if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+        if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts) {
             return data.candidates[0].content.parts[0].text;
         } else {
+            console.error('🔧 DEBUGGING - Unexpected image analysis response:', data);
             throw new Error('Respuesta inesperada de la API');
         }
     }
