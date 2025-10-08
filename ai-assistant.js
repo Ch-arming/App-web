@@ -14,7 +14,7 @@ class AIAssistant {
         this.initializeEventListeners();
         
         // Mostrar alerta si no hay API key
-        this.checkAPIKey();
+        setTimeout(() => this.checkAPIKey(), 1000);
     }
 
     initializeElements() {
@@ -42,14 +42,17 @@ class AIAssistant {
         
         // Load saved API key
         this.loadConfig();
+        
+        console.log('Elementos del asistente IA inicializados');
     }
 
     checkAPIKey() {
         if (!this.apiKey || this.apiKey.trim() === '') {
-            setTimeout(() => {
-                this.addMessage('🔧 **Configuración requerida**: Para usar el asistente IA, necesitas configurar tu clave API de Gemini.', 'assistant');
-                this.addMessage('👉 Toca el botón "⚙️" para configurar tu API key.', 'assistant');
-            }, 1000);
+            this.addMessage('🔧 **Configuración requerida**: Para usar el asistente IA, necesitas configurar tu clave API de Gemini.', 'assistant');
+            this.addMessage('👉 Toca el botón "⚙️" para configurar tu API key.', 'assistant');
+            this.addMessage('📚 **Cómo obtener tu API key:**\n1. Ve a https://makersuite.google.com\n2. Inicia sesión con Google\n3. Crea una nueva API key\n4. Copia y pega aquí', 'assistant');
+        } else {
+            this.addMessage('✅ **API configurada** - ¡Asistente IA listo para usar!', 'assistant');
         }
     }
 
@@ -69,9 +72,21 @@ class AIAssistant {
             this.apiKey = apiKey;
             localStorage.setItem('gemini-api-key', apiKey);
             this.configModal.style.display = 'none';
-            this.addMessage('✅ API Key configurada correctamente. ¡Ya puedes usar el asistente IA!', 'assistant');
+            this.addMessage('✅ **API Key configurada correctamente**. ¡Ya puedes usar el asistente IA!', 'assistant');
+            
+            // Test the API key with a simple request
+            this.testAPIKey();
         } else {
             alert('Por favor, ingresa una API key válida.');
+        }
+    }
+
+    async testAPIKey() {
+        try {
+            const response = await this.getAIResponse('¡Hola!');
+            this.addMessage('🎉 **Conexión exitosa** - El asistente está funcionando correctamente.', 'assistant');
+        } catch (error) {
+            this.addMessage('⚠️ **Error de API** - Verifica que tu clave sea válida y tengas cuota disponible.', 'assistant');
         }
     }
 
@@ -91,7 +106,7 @@ class AIAssistant {
 
             this.recognition.onerror = (event) => {
                 console.error('Error de reconocimiento de voz:', event.error);
-                this.addMessage('❌ Error en el reconocimiento de voz. Intenta de nuevo.', 'assistant');
+                this.addMessage('❌ **Error en el reconocimiento de voz**. Intenta de nuevo.', 'assistant');
                 this.stopListening();
             };
 
@@ -176,6 +191,8 @@ class AIAssistant {
                 this.configModal.style.display = 'none';
             });
         }
+        
+        console.log('Event listeners del asistente IA configurados');
     }
 
     async sendMessage() {
@@ -188,7 +205,7 @@ class AIAssistant {
         // Verificar si hay API key
         if (!this.apiKey || this.apiKey.trim() === '') {
             this.addMessage('⚠️ **API Key no configurada**. Por favor configura tu clave API de Gemini para usar el asistente.', 'assistant');
-            this.addMessage('👉 Toca el botón "⚙️" en la esquina superior derecha.', 'assistant');
+            this.addMessage('👉 Toca el botón "⚙️" en la esquina superior derecha para configurar.', 'assistant');
             return;
         }
 
@@ -207,11 +224,13 @@ class AIAssistant {
             this.removeMessage(thinkingId);
             console.error('Error al obtener respuesta de IA:', error);
             
-            let errorMessage = '❌ **Error de conexión**. ';
+            let errorMessage = '❌ **Error de conexión con la IA**. ';
             if (error.message.includes('API_KEY_INVALID')) {
-                errorMessage += 'La API key no es válida. Por favor verifica tu configuración.';
+                errorMessage += 'La API key no es válida. Por favor verifica tu configuración en el botón ⚙️.';
             } else if (error.message.includes('QUOTA_EXCEEDED')) {
-                errorMessage += 'Se ha excedido la cuota de la API. Intenta más tarde.';
+                errorMessage += 'Se ha excedido la cuota de la API. Intenta más tarde o verifica tu cuenta de Google AI.';
+            } else if (error.message.includes('Failed to fetch')) {
+                errorMessage += 'Problema de conectividad. Verifica tu conexión a internet e intenta de nuevo.';
             } else {
                 errorMessage += 'No pude procesar tu solicitud. Verifica tu conexión e intenta de nuevo.';
             }
@@ -221,14 +240,21 @@ class AIAssistant {
     }
 
     async getAIResponse(message) {
+        // Use the correct Gemini API endpoint
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${this.apiKey}`;
         
         const requestBody = {
             contents: [{
                 parts: [{
-                    text: `Eres un asistente para un restaurante. El usuario dice: "${message}". Responde de manera útil y amigable en español, siendo conciso pero informativo.`
+                    text: `Eres un asistente especializado para un restaurante peruano. El usuario dice: "${message}". Responde de manera útil y amigable en español, siendo conciso pero informativo. Si te preguntan sobre precios, menciona que están en soles peruanos (S/). Si preguntan sobre funciones, explica que puedes ayudar con el menú, tomar órdenes, analizar comandas con IA, y brindar información del restaurante.`
                 }]
-            }]
+            }],
+            generationConfig: {
+                temperature: 0.7,
+                topK: 40,
+                topP: 0.95,
+                maxOutputTokens: 1024,
+            }
         };
 
         const response = await fetch(apiUrl, {
@@ -342,7 +368,11 @@ class AIAssistant {
     async openCamera() {
         try {
             this.stream = await navigator.mediaDevices.getUserMedia({
-                video: { facingMode: this.currentCamera }
+                video: { 
+                    facingMode: this.currentCamera,
+                    width: { ideal: 1280 },
+                    height: { ideal: 720 }
+                }
             });
             
             this.video.srcObject = this.stream;
@@ -357,7 +387,7 @@ class AIAssistant {
             });
         } catch (error) {
             console.error('Error al acceder a la cámara:', error);
-            alert('Error al acceder a la cámara. Verifica los permisos.');
+            alert('Error al acceder a la cámara. Verifica los permisos y que estés usando HTTPS.');
         }
     }
 
@@ -379,7 +409,11 @@ class AIAssistant {
         
         try {
             this.stream = await navigator.mediaDevices.getUserMedia({
-                video: { facingMode: this.currentCamera }
+                video: { 
+                    facingMode: this.currentCamera,
+                    width: { ideal: 1280 },
+                    height: { ideal: 720 }
+                }
             });
             this.video.srcObject = this.stream;
         } catch (error) {
@@ -433,7 +467,7 @@ class AIAssistant {
 
     async analyzeImage() {
         if (!this.apiKey || this.apiKey.trim() === '') {
-            alert('⚠️ API Key no configurada. Configure su clave API de Gemini primero.');
+            alert('⚠️ API Key no configurada. Configure su clave API de Gemini primero tocando ⚙️.');
             return;
         }
 
@@ -455,18 +489,18 @@ class AIAssistant {
             this.closeCamera();
             
             // Mostrar resultado en el chat
-            this.addMessage('📸 **Análisis de imagen completado:**', 'assistant');
+            this.addMessage('📸 **Análisis de comanda completado:**', 'assistant');
             this.addMessage(analysisResult, 'assistant');
             
             if (this.isVoiceEnabled) {
-                this.speak(analysisResult);
+                this.speak('Análisis de comanda completado');
             }
         } catch (error) {
             console.error('Error al analizar imagen:', error);
             let errorMessage = '❌ **Error al analizar la imagen**. ';
             
             if (error.message.includes('API_KEY_INVALID')) {
-                errorMessage += 'La API key no es válida.';
+                errorMessage += 'La API key no es válida. Verifica tu configuración.';
             } else if (error.message.includes('QUOTA_EXCEEDED')) {
                 errorMessage += 'Se ha excedido la cuota de la API.';
             } else {
@@ -488,7 +522,7 @@ class AIAssistant {
             contents: [{
                 parts: [
                     {
-                        text: "Analiza esta imagen de una comanda o menú de restaurante. Extrae y lista todos los elementos pedidos, cantidades, precios (si están visibles) y calcula el total. Responde en español de manera clara y organizada."
+                        text: "Analiza esta imagen de una comanda o menú de restaurante peruano. Extrae y lista todos los elementos pedidos, cantidades, precios (convértelos a soles peruanos S/ si están en otra moneda) y calcula el total. Responde en español de manera clara y organizada. Si ves precios, agrégalos al final con el total."
                     },
                     {
                         inline_data: {
@@ -497,7 +531,13 @@ class AIAssistant {
                         }
                     }
                 ]
-            }]
+            }],
+            generationConfig: {
+                temperature: 0.4,
+                topK: 32,
+                topP: 1,
+                maxOutputTokens: 2048,
+            }
         };
 
         const response = await fetch(apiUrl, {
@@ -529,6 +569,12 @@ class AIAssistant {
 }
 
 // Inicializar cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', () => {
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        window.aiAssistant = new AIAssistant();
+        console.log('🤖 Asistente IA inicializado correctamente');
+    });
+} else {
     window.aiAssistant = new AIAssistant();
-});
+    console.log('🤖 Asistente IA inicializado correctamente');
+}

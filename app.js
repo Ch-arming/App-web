@@ -2,31 +2,48 @@
 class MenuControlSystem {
     constructor() {
         this.dishes = [
-            { id: 1, name: '🥗 Ensalada César', price: 12.99, available: true },
-            { id: 2, name: '🍝 Pasta Carbonara', price: 14.99, available: true },
-            { id: 3, name: '🥩 Filete de Res', price: 24.99, available: false },
-            { id: 4, name: '🍕 Pizza Margherita', price: 16.99, available: true },
-            { id: 5, name: '🥘 Ensalada Griega', price: 11.99, available: true }
+            { id: 1, name: '🥗 Ensalada César', price: 42.99, available: true },
+            { id: 2, name: '🍝 Pasta Carbonara', price: 48.99, available: true },
+            { id: 3, name: '🥩 Filete de Res', price: 89.99, available: false },
+            { id: 4, name: '🍕 Pizza Margherita', price: 52.99, available: true },
+            { id: 5, name: '🥘 Ensalada Griega', price: 38.99, available: true },
+            { id: 6, name: '🍗 Pollo a la Parrilla', price: 65.99, available: true },
+            { id: 7, name: '🍜 Ramen Especial', price: 28.99, available: true }
         ];
         
         this.stats = {
-            orders: 45,
-            sales: 680,
-            topDishes: 12,
-            satisfaction: 95
+            orders: 87,
+            sales: 3420,
+            topDishes: 5,
+            satisfaction: 94
         };
         
         this.initializeApp();
     }
 
     initializeApp() {
+        console.log('Inicializando sistema de menú...');
+        
+        // Esperar a que el DOM esté completamente cargado
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                this.setupUI();
+            });
+        } else {
+            this.setupUI();
+        }
+    }
+
+    setupUI() {
         this.renderDishes();
         this.renderStats();
         this.initializeEventListeners();
         this.initializeServiceWorker();
         
         // Actualizar estadísticas periódicamente
-        setInterval(() => this.updateStats(), 30000); // Cada 30 segundos
+        setInterval(() => this.updateStats(), 15000); // Cada 15 segundos
+        
+        console.log('Sistema de menú inicializado correctamente');
     }
 
     initializeEventListeners() {
@@ -52,34 +69,45 @@ class MenuControlSystem {
                 }
             }
         });
+        
+        console.log('Event listeners inicializados');
     }
 
     renderDishes() {
         const container = document.getElementById('available-dishes');
-        if (!container) return;
+        if (!container) {
+            console.warn('Contenedor de platos no encontrado');
+            return;
+        }
         
-        container.innerHTML = this.dishes.map(dish => `
+        const dishesHTML = this.dishes.map(dish => `
             <div class="dish-item" data-dish-id="${dish.id}" style="cursor: pointer;" title="Click para cambiar disponibilidad">
                 <span class="dish-name">${dish.name}</span>
-                <span class="dish-price">$${dish.price.toFixed(2)}</span>
+                <span class="dish-price">S/ ${dish.price.toFixed(2)}</span>
                 <span class="dish-status ${dish.available ? 'available' : 'unavailable'}">
                     ${dish.available ? 'Disponible' : 'Agotado'}
                 </span>
             </div>
         `).join('');
+        
+        container.innerHTML = dishesHTML;
+        console.log('Platos renderizados:', this.dishes.length);
     }
 
     renderStats() {
         const statsContainer = document.querySelector('.stats-grid');
-        if (!statsContainer) return;
+        if (!statsContainer) {
+            console.warn('Contenedor de estadísticas no encontrado');
+            return;
+        }
         
-        statsContainer.innerHTML = `
+        const statsHTML = `
             <div class="stat-item">
                 <div class="stat-number">${this.stats.orders}</div>
                 <div class="stat-label">Órdenes</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number">$${this.stats.sales}</div>
+                <div class="stat-number">S/ ${this.stats.sales}</div>
                 <div class="stat-label">Ventas</div>
             </div>
             <div class="stat-item">
@@ -91,6 +119,9 @@ class MenuControlSystem {
                 <div class="stat-label">Satisfacción</div>
             </div>
         `;
+        
+        statsContainer.innerHTML = statsHTML;
+        console.log('Estadísticas renderizadas:', this.stats);
     }
 
     toggleDishAvailability(dishId) {
@@ -104,16 +135,25 @@ class MenuControlSystem {
                 `${dish.name} ${dish.available ? 'está disponible' : 'agotado'} ahora`,
                 dish.available ? 'success' : 'warning'
             );
+            
+            console.log(`Plato ${dishId} cambiado a: ${dish.available ? 'disponible' : 'agotado'}`);
         }
     }
 
     updateStats() {
         // Simular actualización de estadísticas
-        this.stats.orders += Math.floor(Math.random() * 3);
-        this.stats.sales += Math.floor(Math.random() * 50);
-        this.stats.satisfaction = Math.max(85, Math.min(100, this.stats.satisfaction + (Math.random() - 0.5) * 2));
+        const oldOrders = this.stats.orders;
+        this.stats.orders += Math.floor(Math.random() * 2);
+        
+        if (this.stats.orders > oldOrders) {
+            this.stats.sales += Math.floor(Math.random() * 100) + 30;
+        }
+        
+        this.stats.satisfaction = Math.max(88, Math.min(98, this.stats.satisfaction + (Math.random() - 0.5) * 3));
+        this.stats.satisfaction = Math.round(this.stats.satisfaction);
         
         this.renderStats();
+        console.log('Estadísticas actualizadas:', this.stats);
     }
 
     showNotification(message, type = 'info') {
@@ -161,7 +201,7 @@ class MenuControlSystem {
     async initializeServiceWorker() {
         if ('serviceWorker' in navigator) {
             try {
-                const registration = await navigator.serviceWorker.register('/sw.js');
+                const registration = await navigator.serviceWorker.register('./sw.js');
                 console.log('ServiceWorker registrado correctamente:', registration);
             } catch (error) {
                 console.log('Error al registrar ServiceWorker:', error);
@@ -203,7 +243,7 @@ class MenuControlSystem {
             dish.price = parseFloat(newPrice);
             this.renderDishes();
             this.showNotification(
-                `Precio de ${dish.name} actualizado: $${oldPrice} → $${dish.price}`,
+                `Precio de ${dish.name} actualizado: S/ ${oldPrice} → S/ ${dish.price}`,
                 'info'
             );
             return dish;
@@ -227,10 +267,12 @@ class MenuControlSystem {
 }
 
 // Inicializar cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', () => {
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        window.menuSystem = new MenuControlSystem();
+        console.log('🍽️ Sistema de Control de Menú iniciado correctamente');
+    });
+} else {
     window.menuSystem = new MenuControlSystem();
-    
-    // Mensaje de bienvenida en consola
     console.log('🍽️ Sistema de Control de Menú iniciado correctamente');
-    console.log('Usa window.menuSystem para acceder a las funciones del sistema');
-});
+}

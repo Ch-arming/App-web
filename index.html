@@ -37,7 +37,7 @@
                         <div class="message assistant-message">
                             <div class="message-avatar">🤖</div>
                             <div class="message-content">
-                                ¡Hola! Soy tu asistente IA para el restaurante. ¿En qué puedo ayudarte hoy?
+                                ¡Hola! Soy tu asistente IA para el restaurante peruano. ¿En qué puedo ayudarte hoy? Puedo analizar comandas, ayudar con el menú y responder preguntas.
                             </div>
                         </div>
                     </div>
@@ -74,44 +74,34 @@
             
             <div class="menu-grid">
                 <div class="menu-card">
-                    <h3>Platos Disponibles</h3>
+                    <h3>🍽️ Platos Disponibles</h3>
                     <div class="available-dishes" id="available-dishes">
-                        <div class="dish-item">
-                            <span class="dish-name">🥗 Ensalada César</span>
-                            <span class="dish-price">$12.99</span>
-                            <span class="dish-status available">Disponible</span>
-                        </div>
-                        <div class="dish-item">
-                            <span class="dish-name">🍝 Pasta Carbonara</span>
-                            <span class="dish-price">$14.99</span>
-                            <span class="dish-status available">Disponible</span>
-                        </div>
-                        <div class="dish-item">
-                            <span class="dish-name">🥩 Filete de Res</span>
-                            <span class="dish-price">$24.99</span>
-                            <span class="dish-status unavailable">Agotado</span>
+                        <!-- Los platos se cargarán aquí dinámicamente -->
+                        <div class="loading-message">
+                            🔄 Cargando platos del menú...
                         </div>
                     </div>
                 </div>
                 
                 <div class="menu-card">
-                    <h3>Estadísticas del Día</h3>
+                    <h3>📊 Estadísticas del Día</h3>
                     <div class="stats-grid">
+                        <!-- Las estadísticas se cargarán aquí dinámicamente -->
                         <div class="stat-item">
-                            <div class="stat-number">45</div>
-                            <div class="stat-label">Órdenes</div>
+                            <div class="stat-number">🔄</div>
+                            <div class="stat-label">Cargando...</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number">$680</div>
-                            <div class="stat-label">Ventas</div>
+                            <div class="stat-number">🔄</div>
+                            <div class="stat-label">Cargando...</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number">12</div>
-                            <div class="stat-label">Platos Top</div>
+                            <div class="stat-number">🔄</div>
+                            <div class="stat-label">Cargando...</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number">95%</div>
-                            <div class="stat-label">Satisfacción</div>
+                            <div class="stat-number">🔄</div>
+                            <div class="stat-label">Cargando...</div>
                         </div>
                     </div>
                 </div>
@@ -166,9 +156,9 @@
                         <br><strong>Cómo obtenerla:</strong>
                     </p>
                     <ol class="config-steps">
-                        <li>Ve a <a href="https://makersuite.google.com/app/apikey" target="_blank">Google AI Studio</a></li>
+                        <li>Ve a <a href="https://makersuite.google.com/app/apikey" target="_blank" rel="noopener">Google AI Studio</a></li>
                         <li>Inicia sesión con tu cuenta de Google</li>
-                        <li>Haz clic en "Create API Key"</li>
+                        <li>Haz clic en “Create API Key”</li>
                         <li>Selecciona un proyecto o crea uno nuevo</li>
                         <li>Copia la clave generada y pégala aquí</li>
                     </ol>
@@ -179,14 +169,50 @@
                     </div>
                     
                     <div class="config-note">
-                        <strong>⚠️ Nota de Seguridad:</strong> Tu clave API se guarda solo en tu dispositivo.
+                        <strong>⚠️ Nota de Seguridad:</strong> Tu clave API se guarda solo en tu dispositivo y nunca se comparte.
+                    </div>
+                    
+                    <div class="config-help">
+                        <strong>🔗 Enlaces útiles:</strong><br>
+                        • <a href="https://makersuite.google.com/app/apikey" target="_blank" rel="noopener">Crear API Key</a><br>
+                        • <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener">Gestionar APIs (Google Cloud)</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Scripts -->
     <script src="app.js"></script>
     <script src="ai-assistant.js"></script>
+    
+    <!-- Initialize App -->
+    <script>
+        console.log('🚀 Iniciando Sistema de Control de Menú v3.0 Final');
+        
+        // Verificar que todos los elementos necesarios estén presentes
+        document.addEventListener('DOMContentLoaded', () => {
+            const requiredElements = [
+                'available-dishes',
+                'chat-messages', 
+                'user-input',
+                'send-button'
+            ];
+            
+            let allElementsFound = true;
+            requiredElements.forEach(id => {
+                if (!document.getElementById(id)) {
+                    console.error(`Elemento requerido no encontrado: ${id}`);
+                    allElementsFound = false;
+                }
+            });
+            
+            if (allElementsFound) {
+                console.log('✅ Todos los elementos de la interfaz encontrados');
+            } else {
+                console.error('❌ Faltan elementos críticos en la interfaz');
+            }
+        });
+    </script>
 </body>
 </html>

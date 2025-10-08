@@ -1,15 +1,15 @@
 {
-    "name": "Sistema Control de Menú",
-    "short_name": "ControlMenu",
-    "description": "Sistema avanzado de control de menú con asistente IA integrado",
-    "version": "2.1.0",
+    "name": "Sistema Control de Menú Peruano",
+    "short_name": "ControlMenuPE",
+    "description": "Sistema completo de control de menú para restaurantes peruanos con asistente IA integrado",
+    "version": "3.0.0",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#667eea",
     "theme_color": "#6366f1",
     "orientation": "portrait-primary",
     "scope": "/",
-    "lang": "es-ES",
+    "lang": "es-PE",
     "dir": "ltr",
     "icons": [
         {
@@ -28,13 +28,13 @@
             "type": "image/png"
         }
     ],
-    "categories": ["business", "productivity", "food"],
+    "categories": ["business", "productivity", "food", "restaurant"],
     "shortcuts": [
         {
-            "name": "Abrir Asistente IA",
+            "name": "Asistente IA",
             "short_name": "IA",
-            "description": "Acceso rápido al asistente de inteligencia artificial",
-            "url": "/?assistant=open",
+            "description": "Acceso directo al asistente de inteligencia artificial",
+            "url": "/?section=ai",
             "icons": [
                 {
                     "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAABhGlDQ1BJQ0MgcHJvZmlsZQAAKJF9kT1Iw0AcxV9TpSIVBzuIOGSoThZERRy1CkWoEGqFVh1MLv2CJg1Jiouj4Fpw8GOx6uDirKuDqyAIfoA4OTopukiJ/0sKLWI9OO7Hu3uPu3eAUC8zzeoYBzTdNlOJuJjJropdr/AhiEEMIyQzy5iToiQ8x9c9fHy9i/Es73N/jj41azEAjwAHzDRsk68T+zZtg+M94YKyxKrwOXHVkhckfuS64vEb54LLPj4zFsm2eWKBWCy0sdLGrGRKcJ7YoUw65YXZo16SJq4y+/1ZlS5J3qQ3HcHFKJa2RyFsRQhJJyggo4oNVGCjTStOirjdJoMPujRhiZyVY8DCIo8VoESd52bx6V5T8T/7Wd3gDQ5qQSGg68WxPsaBbt0g0Nq39be39k58AniekGvd8GYdGL6T3u1oYRVoGQ1NrjtafHI6sL3DjNF0K7WnlS1NfH24n3hNnLt2vXWfk3cg9e0ykU/AQBASKHvd596+k3t+fZzWZfsGADhM6LXh0nKLqAAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFl6AAATHAAAExwAd/VNMAAAAZJJREFUWMPtlj9IAmEYxp+8hXAo20IcamtoCBucGgJbGhocGlroT1vQULQ5t0TL1ODQEBQc+gMeLS0NLkHQ4lBOTp7QJKLpUpC/hnfRS9DuTt9wAOHw973f9/K+77s8QojnH/VNhpMnhRByCgC8iPh5Wf8hAJn/8gK7/eN4AWtBq9UCT9p9S4T/GQAAM9PGz8RxHACRaLOWCjYKwOdyweN0iuzlZYhEIhgNh8Ek6zQajUEonhgUlhNO9TcbnAwCAERbxDEMnEKC/f/YrVYLPqhOKA==",
@@ -43,13 +43,25 @@
             ]
         },
         {
-            "name": "Ver Menú",
+            "name": "Menú del Día",
             "short_name": "Menú",
-            "description": "Ver el estado actual del menú del día",
-            "url": "/?view=menu",
+            "description": "Ver platos disponibles y estadísticas",
+            "url": "/?section=menu",
             "icons": [
                 {
-                    "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAABhGlDQ1BJQ0MgcHJvZmlsZQAAKJF9kT1Iw0AcxV9TpSIVBzuIOGSoThZERRy1CkWoEGqFVh1MLv2CJg1Jiouj4Fpw8GOx6uDirKuDqyAIfoA4OTopukiJ/0sKLWI9OO7Hu3uPu3eAUC8zzeoYBzTdNlOJuJjJropdr/AhiEEMIyQzy5iToiQ8x9c9fHy9i/Es73N/jj41azEAjwAHzDRsk68T+zZtg+M94YKyxKrwOXHVkhckfuS64vEb54LLPj4zFsm2eWKBWCy0sdLGrGRKcJ7YoUw65YXZo16SJq4y+/1ZlS5J3qQ3HcHFKJa2RyFsRQhJJyggo4oNVGCjTStOirjdJoMPujRhiZyVY8DCIo8VoESd52bx6V5T8T/7Wd3gDQ5qQSGg68WxPsaBbt0g0Nq39be39k58AniekGvd8GYdGL6T3u1oYRVoGQ1NrjtafHI6sL3DjNF0K7WnlS1NfH24n3hNnLt2vXWfk3cg9e0ykU/AQBASKHvd596+k3t+fZzWZfsGADhM6LXh0nKLqAAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFl6AAATHAAAExwAd/VNMAAAAZJJREFUWMPtlj9IAmEYxp+8hXAo20IcamtoCBucGgJbGhocGlroT1vQULQ5t0TL1ODQEBQc+gMeLS0NLkHQ4lBOTp7QJKLpUpC/hnfRS9DuTt9wAOHw973f9/K+77s8QojnH/VNhpMnhRByCgC8iPh5Wf8hAJn/8gK7/eN4AWtBq9UCT9p9S4T/GQAAM9PGz8RxHACRaLOWCjYKwOdyweN0iuzlZYhEIhgNh8Ek6zQajUEonhgUlhNO9TcbnAwCAERbxDEMnEKC/f/YrVYLPqhOKA==",
+                    "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAABhGlDQ1BJQ0MgcHJvZmlsZQAAKJF9kT1Iw0AcxV9TpSIVBzuIOGSoThZERRy1CkWoEGqFVh1MLv2CJg1Jiouj4Fpw8GOx6uDirKuDqyAIfoA4OTopukiJ/0sKLWI9OO7Hu3uPu3eAUC8zzeoYBzTdNlOJuJjJropdr/AhiEEMIyQzy5iToiQ8x9c9fHy9i/Es73N/jj41azEAjwAHzDRsk68T+zZtg+M94YKyxKrwOXHVkhckfuS64vEb54LLPj4zFsm2eWKBWCy0sdLGrGRKcJ7YoUw65YXZo16SJq4y+/1ZlS5J3qQ3HcHFKJa2RyFsRQhJJyggo4oNVGCjTStOirjdJoMPujRhiZyVY8DCIo8VoESd52bx6V5T8T/7Wd3gDQ5qQSGg68WxPsaBbt0g0Nq39be39k58AniekGvd8GYdGL6T3u1oYRVoGQ1NrjtafHI6sL3DjNF0K7WnlS1NfH24n3hNnLt2vXWfk3cg9e0ykU/AQBASKHvd596+k3t+fZzWZfsGADhM6LXh0nKLqAAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAATHAAAExwAd/VNMAAAAZJJREFUWMPtlj9IAmEYxp+8hXAo20IcamtoCBucGgJbGhocGlroT1vQULQ5t0TL1ODQEBQc+gMeLS0NLkHQ4lBOTp7QJKLpUpC/hnfRS9DuTt9wAOHw973f9/K+77s8QojnH/VNhpMnhRByCgC8iPh5Wf8hAJn/8gK7/eN4AWtBq9UCT9p9S4T/GQAAM9PGz8RxHACRaLOWCjYKwOdyweN0iuzlZYhEIhgNh8Ek6zQajUEonhgUlhNO9TcbnAwCAERbxDEMnEKC/f/YrVYLPqhOKA==",
+                    "sizes": "96x96"
+                }
+            ]
+        },
+        {
+            "name": "Analizar Comanda",
+            "short_name": "Cámara",
+            "description": "Usar IA para analizar comandas con la cámara",
+            "url": "/?action=camera",
+            "icons": [
+                {
+                    "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAABhGlDQ1BJQ0MgcHJvZmlsZQAAKJF9kT1Iw0AcxV9TpSIVBzuIOGSoThZERRy1CkWoEGqFVh1MLv2CJg1Jiouj4Fpw8GOx6uDirKuDqyAIfoA4OTopukiJ/0sKLWI9OO7Hu3uPu3eAUC8zzeoYBzTdNlOJuJjJropdr/AhiEEMIyQzy5iToiQ8x9c9fHy9i/Es73N/jj41azEAjwAHzDRsk68T+zZtg+M94YKyxKrwOXHVkhckfuS64vEb54LLPj4zFsm2eWKBWCy0sdLGrGRKcJ7YoUw65YXZo16SJq4y+/1ZlS5J3qQ3HcHFKJa2RyFsRQhJJyggo4oNVGCjTStOirjdJoMPujRhiZyVY8DCIo8VoESd52bx6V5T8T/7Wd3gDQ5qQSGg68WxPsaBbt0g0Nq39be39k58AniekGvd8GYdGL6T3u1oYRVoGQ1NrjtafHI6sL3DjNF0K7WnlS1NfH24n3hNnLt2vXWfk3cg9e0ykU/AQBASKHvd596+k3t+fZzWZfsGADhM6LXh0nKLqAAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAATHAAAExwAd/VNMAAAAZJJREFUWMPtlj9IAmEYxp+8hXAo20IcamtoCBucGgJbGhocGlroT1vQULQ5t0TL1ODQEBQc+gMeLS0NLkHQ4lBOTp7QJKLpUpC/hnfRS9DuTt9wAOHw973f9/K+77s8QojnH/VNhpMnhRByCgC8iPh5Wf8hAJn/8gK7/eN4AWtBq9UCT9p9S4T/GQAAM9PGz8RxHACRaLOWCjYKwOdyweN0iuzlZYhEIhgNh8Ek6zQajUEonhgUlhNO9TcbnAwCAERbxDEMnEKC/f/YrVYLPqhOKA==",
                     "sizes": "96x96"
                 }
             ]
@@ -57,11 +69,11 @@
     ],
     "screenshots": [
         {
-            "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAABhGlDQ1BJQ0MgcHJvZmlsZQAAKJF9kT1Iw0AcxV9TpSIVBzuIOGSoThZERRy1CkWoEGqFVh1MLv2CJg1Jiouj4Fpw8GOx6uDirKuDqyAIfoA4OTopukiJ/0sKLWI9OO7Hu3uPu3eAUC8zzeoYBzTdNlOJuJjJropdr/AhiEEMIyQzy5iToiQ8x9c9fHy9i/Es73N/jj41azEAjwAHzDRsk68T+zZtg+M94YKyxKrwOXHVkhckfuS64vEb54LLPj4zFsm2eWKBWCy0sdLGrGRKcJ7YoUw65YXZo16SJq4y+/1ZlS5J3qQ3HcHFKJa2RyFsRQhJJyggo4oNVGCjTStOirjdJoMPujRhiZyVY8DCIo8VoESd52bx6V5T8T/7Wd3gDQ5qQSGg68WxPsaBbt0g0Nq39be39k58AniekGvd8GYdGL6T3u1oYRVoGQ1NrjtafHI6sL3DjNF0K7WnlS1NfH24n3hNnLt2vXWfk3cg9e0ykU/AQBASKHvd596+k3t+fZzWZfsGADhM6LXh0nKLqAAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFl6AAATHAAAExwAd/VNMAAAAZJJREFUWMPtlj9IAmEYxp+8hXAo20IcamtoCBucGgJbGhocGlroT1vQULQ5t0TL1ODQEBQc+gMeLS0NLkHQ4lBOTp7QJKLpUpC/hnfRS9DuTt9wAOHw973f9/K+77s8QojnH/VNhpMnhRByCgC8iPh5Wf8hAJn/8gK7/eN4AWtBq9UCT9p9S4T/GQAAM9PGz8RxHACRaLOWCjYKwOdyweN0iuzlZYhEIhgNh8Ek6zQajUEonhgUlhNO9TcbnAwCAERbxDEMnEKC/f/YrVYLPqhOKA==",
+            "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAABhGlDQ1BJQ0MgcHJvZmlsZQAAKJF9kT1Iw0AcxV9TpSIVBzuIOGSoThZERRy1CkWoEGqFVh1MLv2CJg1Jiouj4Fpw8GOx6uDirKuDqyAIfoA4OTopukiJ/0sKLWI9OO7Hu3uPu3eAUC8zzeoYBzTdNlOJuJjJropdr/AhiEEMIyQzy5iToiQ8x9c9fHy9i/Es73N/jj41azEAjwAHzDRsk68T+zZtg+M94YKyxKrwOXHVkhckfuS64vEb54LLPj4zFsm2eWKBWCy0sdLGrGRKcJ7YoUw65YXZo16SJq4y+/1ZlS5J3qQ3HcHFKJa2RyFsRQhJJyggo4oNVGCjTStOirjdJoMPujRhiZyVY8DCIo8VoESd52bx6V5T8T/7Wd3gDQ5qQSGg68WxPsaBbt0g0Nq39be39k58AniekGvd8GYdGL6T3u1oYRVoGQ1NrjtafHI6sL3DjNF0K7WnlS1NfH24n3hNnLt2vXWfk3cg9e0ykU/AQBASKHvd596+k3t+fZzWZfsGADhM6LXh0nKLqAAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAATHAAAExwAd/VNMAAAAZJJREFUWMPtlj9IAmEYxp+8hXAo20IcamtoCBucGgJbGhocGlroT1vQULQ5t0TL1ODQEBQc+gMeLS0NLkHQ4lBOTp7QJKLpUpC/hnfRS9DuTt9wAOHw973f9/K+77s8QojnH/VNhpMnhRByCgC8iPh5Wf8hAJn/8gK7/eN4AWtBq9UCT9p9S4T/GQAAM9PGz8RxHACRaLOWCjYKwOdyweN0iuzlZYhEIhgNh8Ek6zQajUEonhgUlhNO9TcbnAwCAERbxDEMnEKC/f/YrVYLPqhOKA==",
             "sizes": "540x720",
             "type": "image/png",
             "platform": "wide",
-            "label": "Vista general del sistema de control"
+            "label": "Pantalla principal con asistente IA y control de menú"
         }
     ],
     "prefer_related_applications": false,
