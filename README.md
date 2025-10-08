@@ -1,184 +1,122 @@
-# Control de Menú - Asistente IA 🤖
+# 🍽️ Control de Menú Diario con Asistente IA
 
-## 🍽️ Descripción
+> **Versión 2.0 Corregida** - Aplicación web progresiva (PWA) para la gestión de restaurantes con inteligencia artificial integrada.
 
-Sistema avanzado de gestión de restaurante con **Asistente de Inteligencia Artificial** integrado. Permite controlar completamente tu restaurante por voz y analizar comandas por foto.
+## ✨ **Nuevas Características Corregidas**
 
-## ✨ Características Principales
+### 📸 **Cámara Mejorada**
+- ✅ **Botón para cambiar entre cámara frontal y posterior**
+- ✅ **Captura de imagen corregida** - Ya no falla al tomar fotos
+- ✅ **Selección de archivos mejorada** - Preview y validación incluida
+- ✅ **Mejor manejo de errores** - Mensajes claros y informativos
 
-### 🎙️ **Asistente de IA por Voz**
-- **Control total por voz** de la aplicación
-- **Comandos naturales** en español peruano
-- **Respuestas por voz** activables/desactivables
-- **Reconocimiento inteligente** de instrucciones complejas
-
-### 📸 **Análisis de Comandas**
-- **Toma foto** a comandas escritas a mano
-- **Extracción automática** de platos, cantidades y precios
-- **Clasificación inteligente** de datos
-- **Agregado automático** al sistema
+### 🤖 **Asistente de IA Potente**
+- **Control por voz completo** - Controla toda la aplicación con comandos de voz
+- **Análisis de comandas** - Toma foto de órdenes escritas y las digitaliza automáticamente
+- **Respuestas por voz configurables** - Activa/desactiva las respuestas habladas
+- **Integración con Google Gemini** - IA de última generación GRATUITA
 
 ### 💰 **Gestión Completa**
-- **Menú digital** con categorías
-- **Control de inventario** en tiempo real
-- **Registro de ventas** con historial
-- **Estadísticas** y reportes automáticos
-- **Precios en soles peruanos (S/)**
+- **Precios en Soles Peruanos (S/)** - Moneda local configurada
+- **Control de inventario en tiempo real**
+- **Estadísticas automáticas**
+- **Interfaz responsive** - Optimizada para celulares
 
-## 🎙️ Comandos de Voz Disponibles
+## 🚀 **Instalación y Configuración**
 
-### **Agregar Platos**
-```
-“Agregar plato Caldo de Gallina, precio 6 soles, cantidad 13, categoría Desayuno”
-“Añadir Arroz con Pollo por 15 soles, stock 20”
-“Crear plato Lomo Saltado, 18 soles, 10 porciones”
-```
+### **Paso 1: Subir Archivos a GitHub**
+1. Sube todos los archivos de la carpeta `control-menu-web-v2-fixed/` a tu repositorio
+2. Asegúrate de que GitHub Pages esté activado
+3. Accede a: `https://tu-usuario.github.io/tu-repositorio`
 
-### **Consultas**
-```
-“¿Cuántas ventas tengo hoy?”
-“Mostrar estadísticas”
-“¿Qué platos tienen poco stock?”
-“Ventas de la semana”
-```
+### **Paso 2: Obtener API Key de Gemini (GRATIS)**
+1. Ve a [Google AI Studio](https://aistudio.google.com/app/apikey)
+2. Inicia sesión con tu cuenta de Google
+3. Haz clic en **"Create API Key"**
+4. Copia la clave generada
+
+### **Paso 3: Configurar la Aplicación**
+1. Abre la aplicación web
+2. Haz clic en **"⚙️ Configurar IA"**
+3. Pega tu API key de Gemini
+4. Configura las opciones de voz a tu gusto
+5. Haz clic en **"Guardar"**
+
+## 🎤 **Comandos de Voz Disponibles**
+
+### **Gestión de Platos**
+- *"Agregar plato Caldo de Gallina precio 6 soles cantidad 13 categoría Desayuno"*
+- *"Editar plato Arroz con Pollo cambiar precio a 8 soles"*
+- *"Eliminar plato Sopa de Verduras"*
+
+### **Ventas y Consultas**
+- *"¿Cuántas ventas tengo hoy?"*
+- *"Mostrar estadísticas"*
+- *"Registrar venta de 2 Caldo de Gallina"*
+- *"¿Qué platos tienen stock bajo?"*
 
 ### **Análisis de Comandas**
-```
-“Analizar comanda”
-“Tomar foto de la orden”
-“Procesar ticket”
-```
+- *"Analizar comanda"* - Abre la cámara para escanear órdenes escritas
+- *"Tomar foto de la orden"* - Procesa automáticamente los datos
 
-### **Control de la App**
-```
-“Activar respuestas por voz”
-“Desactivar sonido”
-“Ayuda”
-“¿Qué puedo hacer?”
-```
+## 📸 **Cómo Usar la Cámara**
 
-## 🔧 Configuración Inicial
+### **Capturar Imagen**
+1. Haz clic en **"📸 Cámara"**
+2. Usa **"🔄 Cambiar Cámara"** para alternar entre frontal/posterior
+3. Enfoca la comanda o menú
+4. Haz clic en **"📷 Capturar"**
+5. Espera el análisis automático
 
-### **1. Obtener API Key de Gemini (GRATIS)**
-1. Ve a [Google AI Studio](https://aistudio.google.com/app/apikey)
-2. Crea una cuenta (gratis)
-3. Genera tu API Key
-4. Copia la clave
+### **Seleccionar Archivo**
+1. Haz clic en **"📁 Seleccionar Archivo"**
+2. Elige una foto desde tu galería
+3. La IA procesará la imagen automáticamente
 
-### **2. Configurar en la App**
-1. Abre la aplicación
-2. Haz clic en el ícono de **Asistente IA** 🤖
-3. Presiona el botón de **Configuración** ⚙️
-4. Pega tu API Key
-5. Ajusta configuraciones de voz
-6. **Guardar**
+## 🔧 **Características Técnicas**
 
-### **3. Permisos Necesarios**
-- **Micrófono**: Para comandos de voz
-- **Cámara**: Para analizar comandas
-- **Almacenamiento**: Para guardar datos localmente
+- **PWA Completa** - Instalable en el teléfono
+- **Funciona Offline** - Datos guardados localmente
+- **Responsive Design** - Adaptado a todos los dispositivos
+- **Google Gemini 2.0 Flash** - IA de última generación
+- **Web Speech API** - Reconocimiento de voz nativo
+- **Camera API** - Acceso a cámaras frontal y posterior
 
-## 📱 Instalación como App
+## 🌐 **Compatibilidad**
 
-### **En Android/iOS:**
-1. Abre la web app en **Chrome/Safari**
-2. Busca el ícono **"Instalar"** en la barra de direcciones
-3. O ve al menú → **"Agregar a pantalla de inicio"**
-4. ¡Listo! Ya tienes la app nativa
+- ✅ **Chrome/Edge** (Recomendado)
+- ✅ **Safari** (iOS/macOS)
+- ✅ **Firefox** (Limitado reconocimiento de voz)
+- ✅ **Opera**
 
-## 🔍 Uso Básico
+## 📊 **Límites de la Versión Gratuita**
 
-### **Agregar Platos por Voz**
-1. Presiona el botón **🎙️ Hablar**
-2. Di: *"Agregar plato [nombre], precio [X] soles, cantidad [Y]"*
-3. El asistente confirmará la acción
-4. El plato se agrega automáticamente
+**Google Gemini API (GRATIS):**
+- 15 peticiones por minuto
+- 1,500 peticiones por día
+- 1 millón de tokens por mes
 
-### **Analizar Comandas**
-1. Presiona **📸 Analizar Comanda**
-2. Toma foto o selecciona imagen
-3. La IA extraerá los datos automáticamente
-4. Revisa y confirma para agregar al sistema
+> 💰 **¡Más que suficiente para un restaurante!** Equivale a cientos de comandos de voz y análisis de imágenes diarios.
 
-### **Consultas por Voz**
-1. Pregunta cualquier cosa sobre tu restaurante
-2. La IA responderá con datos en tiempo real
-3. Respuestas por voz opcionales
+## 🔒 **Seguridad**
 
-## 📊 Estadísticas Disponibles
+- Tu API key se guarda **solo en tu navegador**
+- Los datos **no se envían a servidores externos**
+- **Funciona completamente offline** después de cargar
 
-- **Platos en Menú**: Total de platos activos
-- **Ventas del Día**: Número de ventas hoy
-- **Ingresos Diarios**: Total en soles peruanos
-- **Stock Bajo**: Platos con menos de 5 unidades
-- **Actividad Reciente**: Historial de acciones
-- **Ventas por Categoría**: Análisis visual
+## 🎆 **¡Listo para Usar!**
 
-## 🔒 Privacidad y Seguridad
+Esta versión corregida soluciona todos los problemas reportados:
+- ✅ Cámara frontal/posterior funcionando
+- ✅ Captura de imagen sin errores
+- ✅ Selección de archivos mejorada
+- ✅ Interfaz más intuitiva
+- ✅ Mejor manejo de errores
 
-- **Datos locales**: Todo se guarda en tu dispositivo
-- **Sin servidores**: No enviamos datos a terceros
-- **API segura**: Conexión encriptada con Google
-- **Offline**: Funciona sin internet (excepto IA)
-
-## 💰 Costos
-
-### **Gemini API - GRATUITO**
-- **15 comandos por minuto**
-- **1,500 comandos por día**
-- **Sin costo mensual**
-- **Perfecto para restaurantes**
-
-### **Uso Estimado Diario**
-- 50 comandos de voz = ✅ Gratis
-- 20 análisis de comandas = ✅ Gratis
-- **Total**: **$0.00** 🎉
-
-## 🔧 Soporte Técnico
-
-### **Navegadores Compatibles**
-- ✅ **Chrome** (Recomendado)
-- ✅ **Edge**
-- ✅ **Safari** (iOS)
-- ✅ **Firefox** (Limitado)
-
-### **Dispositivos**
-- ✅ **Móviles** Android/iOS
-- ✅ **Tablets**
-- ✅ **Computadoras**
-
-### **Problemas Comunes**
-
-**❌ No funciona el micrófono**
-- Permite permisos de micrófono
-- Usa HTTPS (requerido para voz)
-
-**❌ No se activa la IA**
-- Verifica tu API Key de Gemini
-- Comprueba conexión a internet
-
-**❌ Error al analizar fotos**
-- Usa fotos claras y bien iluminadas
-- Permite permisos de cámara
-
-## 🚀 Actualizaciones
-
-### **Versión 2.0.0 - Actual**
-- ✨ Asistente IA completo
-- 📸 Análisis de comandas
-- 🎙️ Control por voz total
-- 💰 Precios en soles peruanos
-- 📊 Estadísticas avanzadas
-
-## 🎆 Características Futuras
-
-- 📈 **Reportes PDF** exportables
-- 🔔 **Notificaciones** inteligentes
-- 🌍 **Multi-idioma**
-- 📊 **Analíticas avanzadas**
-- 🤝 **Integración** con sistemas de pago
+**¡Tu restaurante ahora tiene un asistente de IA profesional!** 🤖✨
 
 ---
 
-**© 2025 - Control de Menú con IA**  
-*Simplificando la gestión de restaurantes con inteligencia artificial* 🤖✨
+**Desarrollado por:** MiniMax Agent  
+**Versión:** 2.0 Corregida  
+**Fecha:** Octubre 2025

@@ -496,26 +496,28 @@ class MenuControlApp {
 
     loadRecentActivity() {
         const activities = JSON.parse(localStorage.getItem('activities') || '[]');
-        this.recentActivityList.innerHTML = '';
-        
-        if (activities.length === 0) {
-            this.recentActivityList.innerHTML = '<div class="empty-state">📊 No hay actividad reciente</div>';
-            return;
+        if (this.recentActivityList) {
+            this.recentActivityList.innerHTML = '';
+            
+            if (activities.length === 0) {
+                this.recentActivityList.innerHTML = '<div class="empty-state">📊 No hay actividad reciente</div>';
+                return;
+            }
+            
+            activities.slice(0, 10).forEach(activity => {
+                const activityElement = document.createElement('div');
+                activityElement.className = 'activity-item';
+                
+                const timeAgo = this.getTimeAgo(activity.timestamp);
+                
+                activityElement.innerHTML = `
+                    <div>${activity.message}</div>
+                    <div class="activity-time">${timeAgo}</div>
+                `;
+                
+                this.recentActivityList.appendChild(activityElement);
+            });
         }
-        
-        activities.slice(0, 10).forEach(activity => {
-            const activityElement = document.createElement('div');
-            activityElement.className = 'activity-item';
-            
-            const timeAgo = this.getTimeAgo(activity.timestamp);
-            
-            activityElement.innerHTML = `
-                <div>${activity.message}</div>
-                <div class="activity-time">${timeAgo}</div>
-            `;
-            
-            this.recentActivityList.appendChild(activityElement);
-        });
     }
 
     getTimeAgo(timestamp) {

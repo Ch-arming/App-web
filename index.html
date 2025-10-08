@@ -4,63 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Control de Menú - Asistente IA</title>
-    <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#2196F3">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <link rel="apple-touch-icon" href="icon-192x192.png">
+    <meta name="theme-color" content="#667eea">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Asistente de IA -->
+    <!-- Asistente IA -->
     <div id="ai-assistant" class="ai-assistant">
         <div class="ai-header">
             <h3>🤖 Asistente IA</h3>
             <div class="ai-controls">
-                <button id="voice-toggle" class="voice-btn" title="Activar/Desactivar respuestas por voz">
-                    🔊
-                </button>
-                <button id="settings-btn" class="settings-btn" title="Configuración">
-                    ⚙️
-                </button>
+                <button id="voice-toggle" class="voice-toggle" title="Alternar respuestas por voz">🔊</button>
+                <button id="settings-btn" class="settings-btn" title="Configurar IA">⚙️</button>
             </div>
         </div>
         
-        <div class="ai-status" id="ai-status">
+        <div id="ai-status" class="ai-status">
+            <div id="status-indicator" class="status-indicator ready"></div>
             <span class="status-text">Listo para escuchar</span>
-            <div class="status-indicator" id="status-indicator"></div>
         </div>
         
-        <div class="ai-buttons">
-            <button id="voice-btn" class="voice-record-btn">
-                <span class="mic-icon">🎙️</span>
+        <div class="ai-actions">
+            <button id="voice-btn" class="voice-btn" title="Activar comando de voz">
+                <span class="mic-icon">🎤</span>
                 <span class="btn-text">Hablar</span>
             </button>
-            <button id="camera-btn" class="camera-btn">
+            <button id="camera-btn" class="camera-btn" title="Analizar comanda con cámara">
                 <span class="camera-icon">📸</span>
-                <span class="btn-text">Analizar Comanda</span>
+                <span class="btn-text">Cámara</span>
             </button>
         </div>
         
-        <div class="ai-chat" id="ai-chat">
-            <div class="chat-message ai-message">
-                <strong>🤖 Asistente:</strong> ¡Hola! Puedo ayudarte a gestionar tu restaurante por voz. Prueba diciendo: "Agregar plato Arroz con Pollo, precio 15 soles, cantidad 20"
-            </div>
-        </div>
+        <div id="ai-chat" class="ai-chat"></div>
     </div>
 
-    <!-- Cámara Modal -->
+    <!-- Cámara Modal (MEJORADO) -->
     <div id="camera-modal" class="modal">
-        <div class="modal-content">
+        <div class="modal-content camera-modal-content">
             <div class="modal-header">
                 <h3>📸 Analizar Comanda</h3>
                 <button class="close-btn" id="close-camera">&times;</button>
             </div>
             <div class="camera-container">
-                <video id="camera-video" autoplay playsinline></video>
+                <video id="camera-video" autoplay playsinline muted></video>
                 <canvas id="camera-canvas" style="display: none;"></canvas>
                 <div class="camera-controls">
                     <button id="capture-btn" class="capture-btn">📷 Capturar</button>
+                    <button id="switch-camera-btn" class="switch-camera-btn">🔄 Cámara Posterior</button>
                     <button id="file-input-btn" class="file-btn">📁 Seleccionar Archivo</button>
                     <input type="file" id="file-input" accept="image/*" style="display: none;">
                 </div>
@@ -159,18 +149,18 @@
             <h2>📊 Análisis y Reportes</h2>
             <div class="analytics-grid">
                 <div class="chart-container">
-                    <h3>Ventas por Categoría</h3>
-                    <canvas id="category-chart"></canvas>
+                    <h3>Ventas por Hora</h3>
+                    <canvas id="sales-chart" width="300" height="200"></canvas>
                 </div>
-                <div class="recent-activity">
-                    <h3>📈 Actividad Reciente</h3>
-                    <div id="recent-activity-list"></div>
+                <div class="chart-container">
+                    <h3>Platos Más Vendidos</h3>
+                    <div id="top-dishes" class="top-dishes-list"></div>
                 </div>
             </div>
         </section>
     </div>
 
-    <!-- Modal para agregar plato -->
+    <!-- Modal para agregar/editar plato -->
     <div id="dish-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -193,7 +183,7 @@
                 <div class="form-group">
                     <label for="dish-category">Categoría:</label>
                     <select id="dish-category" required>
-                        <option value="">Seleccionar categoría</option>
+                        <option value="">Selecciona una categoría</option>
                         <option value="Desayuno">Desayuno</option>
                         <option value="Almuerzo">Almuerzo</option>
                         <option value="Cena">Cena</option>

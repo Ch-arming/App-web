@@ -7,6 +7,8 @@ class AIAssistant {
         this.recognition = null;
         this.synthesis = window.speechSynthesis;
         this.isSpeaking = false;
+        this.currentStream = null;
+        this.currentCameraMode = 'user'; // 'user' para frontal, 'environment' para posterior
         
         this.initializeElements();
         this.initializeSpeechRecognition();
@@ -40,6 +42,7 @@ class AIAssistant {
         this.captureBtn = document.getElementById('capture-btn');
         this.fileInputBtn = document.getElementById('file-input-btn');
         this.fileInput = document.getElementById('file-input');
+        this.switchCameraBtn = document.getElementById('switch-camera-btn');
         this.imagePreview = document.getElementById('image-preview');
         this.analysisResult = document.getElementById('analysis-result');
         
@@ -101,6 +104,7 @@ class AIAssistant {
         this.captureBtn.addEventListener('click', () => this.captureImage());
         this.fileInputBtn.addEventListener('click', () => this.fileInput.click());
         this.fileInput.addEventListener('change', (e) => this.handleFileSelect(e));
+        this.switchCameraBtn.addEventListener('click', () => this.switchCamera());
         
         // Configuración
         this.saveSettingsBtn.addEventListener('click', () => this.saveSettings());
@@ -129,6 +133,11 @@ class AIAssistant {
         
         this.voiceToggle.textContent = this.voiceEnabled ? '🔊' : '🔇';
         this.voiceToggle.title = this.voiceEnabled ? 'Desactivar respuestas por voz' : 'Activar respuestas por voz';
+        
+        // Actualizar texto del botón de cambiar cámara
+        if (this.switchCameraBtn) {
+            this.switchCameraBtn.textContent = this.currentCameraMode === 'user' ? '🔄 Cámara Posterior' : '🔄 Cámara Frontal';
+        }
     }
 
     toggleAssistant() {
@@ -193,7 +202,7 @@ Responde SOLO con JSON válido:
                     "parameters": {...},
                     "response": "mensaje de confirmación amigable"
                 }`,
-                model: 'gemini-2.5-flash'
+                model: 'gemini-2.0-flash-exp'
             });
             
             const commandData = JSON.parse(response);
@@ -328,69 +337,157 @@ Responde SOLO con JSON válido:
         this.speak(helpMessage);
     }
 
-    // Funciones de cámara y análisis de imágenes
+    // Funciones de cámara y análisis de imágenes (CORREGIDAS)
     async openCamera() {
         this.cameraModal.style.display = 'block';
+        this.analysisResult.innerHTML = '';
+        this.imagePreview.innerHTML = '';
         
         try {
-            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-            this.cameraVideo.srcObject = stream;
+            await this.startCamera();
         } catch (error) {
             console.error('Error accediendo a la cámara:', error);
-            this.analysisResult.innerHTML = '<p style="color: red;">Error: No se pudo acceder a la cámara. Usa la opción de seleccionar archivo.</p>';
+            this.analysisResult.innerHTML = '<p style="color: red;">❌ Error: No se pudo acceder a la cámara. Usa la opción de seleccionar archivo.</p>';
+        }
+    }
+
+    async startCamera() {
+        // Detener stream anterior si existe
+        if (this.currentStream) {
+            this.currentStream.getTracks().forEach(track => track.stop());
+        }
+        
+        const constraints = {
+            video: {
+                facingMode: this.currentCameraMode,
+                width: { ideal: 1280 },
+                height: { ideal: 720 }
+            }
+        };
+        
+        try {
+            this.currentStream = await navigator.mediaDevices.getUserMedia(constraints);
+            this.cameraVideo.srcObject = this.currentStream;
+            this.cameraVideo.style.display = 'block';
+            
+            // Actualizar botón de cambiar cámara
+            this.updateUI();
+            
+        } catch (error) {
+            throw new Error('No se pudo acceder a la cámara: ' + error.message);
+        }
+    }
+
+    async switchCamera() {
+        // Cambiar entre cámara frontal y posterior
+        this.currentCameraMode = this.currentCameraMode === 'user' ? 'environment' : 'user';
+        
+        try {
+            await this.startCamera();
+            const cameraType = this.currentCameraMode === 'user' ? 'frontal' : 'posterior';
+            this.addChatMessage('ai', `🤖 Asistente: Cambiando a cámara ${cameraType}`);
+        } catch (error) {
+            console.error('Error cambiando cámara:', error);
+            // Revertir el cambio si falla
+            this.currentCameraMode = this.currentCameraMode === 'user' ? 'environment' : 'user';
+            this.updateUI();
+            this.analysisResult.innerHTML = '<p style="color: orange;">⚠️ No se pudo cambiar de cámara. Verifica que tu dispositivo tenga ambas cámaras.</p>';
         }
     }
 
     closeCamera() {
         this.cameraModal.style.display = 'none';
-        if (this.cameraVideo.srcObject) {
-            this.cameraVideo.srcObject.getTracks().forEach(track => track.stop());
+        
+        // Detener todas las cámaras
+        if (this.currentStream) {
+            this.currentStream.getTracks().forEach(track => track.stop());
+            this.currentStream = null;
         }
+        
+        this.cameraVideo.srcObject = null;
         this.imagePreview.innerHTML = '';
         this.analysisResult.innerHTML = '';
     }
 
     captureImage() {
+        if (!this.cameraVideo.videoWidth || !this.cameraVideo.videoHeight) {
+            this.analysisResult.innerHTML = '<p style="color: red;">❌ Error: La cámara no está lista. Espera un momento e intenta de nuevo.</p>';
+            return;
+        }
+        
         const canvas = this.cameraCanvas;
         const video = this.cameraVideo;
         
+        // Configurar canvas con las dimensiones del video
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         
         const ctx = canvas.getContext('2d');
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
         
+        // Convertir a blob y analizar
         canvas.toBlob(blob => {
-            this.analyzeImage(blob);
-        }, 'image/jpeg', 0.8);
+            if (blob) {
+                this.analyzeImage(blob);
+            } else {
+                this.analysisResult.innerHTML = '<p style="color: red;">❌ Error al capturar la imagen. Inténtalo de nuevo.</p>';
+            }
+        }, 'image/jpeg', 0.9);
     }
 
     handleFileSelect(event) {
         const file = event.target.files[0];
-        if (file && file.type.startsWith('image/')) {
-            this.analyzeImage(file);
+        
+        if (!file) {
+            this.analysisResult.innerHTML = '<p style="color: orange;">⚠️ No se seleccionó ningún archivo.</p>';
+            return;
         }
+        
+        if (!file.type.startsWith('image/')) {
+            this.analysisResult.innerHTML = '<p style="color: red;">❌ Error: Por favor selecciona un archivo de imagen válido (JPG, PNG, WebP).</p>';
+            return;
+        }
+        
+        // Mostrar preview del archivo seleccionado
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            this.imagePreview.innerHTML = `
+                <div class="selected-file-preview">
+                    <p>📁 Archivo seleccionado: ${file.name}</p>
+                    <img src="${e.target.result}" style="max-width: 100%; height: auto; border-radius: 8px; margin-top: 10px;">
+                </div>
+            `;
+        };
+        reader.readAsDataURL(file);
+        
+        // Analizar la imagen
+        this.analyzeImage(file);
+        
+        // Limpiar el input para permitir seleccionar el mismo archivo de nuevo
+        event.target.value = '';
     }
 
     async analyzeImage(imageBlob) {
         if (!this.apiKey) {
-            this.analysisResult.innerHTML = '<p style="color: red;">Necesitas configurar tu clave API de Gemini primero.</p>';
+            this.analysisResult.innerHTML = '<p style="color: red;">❌ Necesitas configurar tu clave API de Gemini primero. Ve a ⚙️ Configurar IA.</p>';
             return;
         }
         
-        this.analysisResult.innerHTML = '<p>🤖 Analizando imagen...</p>';
+        this.analysisResult.innerHTML = '<div class="analyzing">🤖 Analizando imagen, por favor espera...</div>';
         
         try {
             // Convertir imagen a base64
             const base64 = await this.blobToBase64(imageBlob);
             
-            // Mostrar preview
-            this.imagePreview.innerHTML = `<img src="${base64}" style="max-width: 100%; height: auto; border-radius: 8px;">`;
+            // Si no hay preview, mostrarla
+            if (!this.imagePreview.innerHTML) {
+                this.imagePreview.innerHTML = `<img src="${base64}" style="max-width: 100%; height: auto; border-radius: 8px;">`;
+            }
             
             const response = await this.callGeminiAPI({
-                prompt: `Analiza esta imagen de una comanda de restaurante. Extrae TODOS los platos, cantidades y precios que puedas identificar. 
+                prompt: `Analiza esta imagen de una comanda o menú de restaurante. Extrae TODOS los platos, cantidades y precios que puedas identificar. 
                 
-Responde en JSON con este formato:
+Responde en JSON con este formato exacto:
                 {
                     "items": [
                         {
@@ -404,7 +501,7 @@ Responde en JSON con este formato:
                     "summary": "resumen amigable de lo encontrado"
                 }`,
                 image: base64.split(',')[1], // Quitar el prefijo data:image
-                model: 'gemini-2.5-flash'
+                model: 'gemini-2.0-flash-exp'
             });
             
             const analysis = JSON.parse(response);
@@ -412,7 +509,7 @@ Responde en JSON con este formato:
             
         } catch (error) {
             console.error('Error analizando imagen:', error);
-            this.analysisResult.innerHTML = '<p style="color: red;">Error al analizar la imagen. Verifica tu conexión y API key.</p>';
+            this.analysisResult.innerHTML = '<p style="color: red;">❌ Error al analizar la imagen. Verifica tu conexión e intenta de nuevo.</p>';
         }
     }
 
@@ -423,7 +520,7 @@ Responde en JSON con este formato:
         
         if (analysis.items && analysis.items.length > 0) {
             html += `<div class="items-list">`;
-            analysis.items.forEach(item => {
+            analysis.items.forEach((item, index) => {
                 html += `<div class="item">`;
                 html += `<strong>${item.name}</strong> - Cantidad: ${item.quantity} - S/${item.price} c/u`;
                 if (item.total) html += ` - Total: S/${item.total}`;
@@ -498,7 +595,7 @@ Responde en JSON con este formato:
 
     // Utilidades
     async callGeminiAPI(params) {
-        const { prompt, image, model = 'gemini-2.5-flash' } = params;
+        const { prompt, image, model = 'gemini-2.0-flash-exp' } = params;
         
         const requestBody = {
             contents: [{
