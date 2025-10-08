@@ -240,8 +240,8 @@ class AIAssistant {
     }
 
     async getAIResponse(message) {
-        // CORRECTED: Updated API endpoint for Gemini 1.5 Flash (2025)
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${this.apiKey}`;
+        // FIXED: Using working model from discovery test
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=${this.apiKey}`;
         
         const requestBody = {
             contents: [{
@@ -254,25 +254,7 @@ class AIAssistant {
                 topK: 40,
                 topP: 0.95,
                 maxOutputTokens: 1024,
-            },
-            safetySettings: [
-                {
-                    category: "HARM_CATEGORY_HARASSMENT",
-                    threshold: "BLOCK_MEDIUM_AND_ABOVE"
-                },
-                {
-                    category: "HARM_CATEGORY_HATE_SPEECH",
-                    threshold: "BLOCK_MEDIUM_AND_ABOVE"
-                },
-                {
-                    category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-                    threshold: "BLOCK_MEDIUM_AND_ABOVE"
-                },
-                {
-                    category: "HARM_CATEGORY_DANGEROUS_CONTENT",
-                    threshold: "BLOCK_MEDIUM_AND_ABOVE"
-                }
-            ]
+            }
         };
 
         console.log('🔧 DEBUGGING - API URL:', apiUrl);
@@ -545,8 +527,8 @@ class AIAssistant {
 
     async analyzeImageWithAI(imageDataUrl) {
         const base64Image = imageDataUrl.split(',')[1];
-        // CORRECTED: Updated API endpoint for Gemini 1.5 Flash (supports both text and images)
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${this.apiKey}`;
+        // FIXED: Using working model from discovery test
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=${this.apiKey}`;
         
         const requestBody = {
             contents: [{
@@ -567,25 +549,7 @@ class AIAssistant {
                 topK: 32,
                 topP: 1,
                 maxOutputTokens: 2048,
-            },
-            safetySettings: [
-                {
-                    category: "HARM_CATEGORY_HARASSMENT",
-                    threshold: "BLOCK_MEDIUM_AND_ABOVE"
-                },
-                {
-                    category: "HARM_CATEGORY_HATE_SPEECH",
-                    threshold: "BLOCK_MEDIUM_AND_ABOVE"
-                },
-                {
-                    category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-                    threshold: "BLOCK_MEDIUM_AND_ABOVE"
-                },
-                {
-                    category: "HARM_CATEGORY_DANGEROUS_CONTENT",
-                    threshold: "BLOCK_MEDIUM_AND_ABOVE"
-                }
-            ]
+            }
         };
 
         console.log('🔧 DEBUGGING - Image Analysis API URL:', apiUrl);
